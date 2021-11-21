@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arvo:ital@1&display=swap" rel="stylesheet">
+<style>
+body {
+  font-size:16px;
+  color:#531628
+;
+
+
+  background-size:cover;
+  margin:0px;
+}
+*{
+font-family: 'Arvo', serif;;
+}
+html{
+  /*background: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12) no-repeat center center fixed; 
+  */
+  background-color:#E6C1A6
+;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+}
+#centerbutton{
+  display: flex;
+  justify-content:center;
+}
+#centerrun{
+  display: flex;
+  justify-content:center;
+}
+#centerclock{
+  display: flex;
+  color:black;
+  justify-content:center;
+}
+
+#clock{
+  color:black;
+  font-size:25px; 
+}
+
+
+.navbar{
+  width: 100%;
+  overflow: hidden;
+  color:#2a2d34ff;
+  width:100%;
+  font-size:20px;
+  display: flex;
+  justify-content: center;
+
+
+}
+.navbar li{
+  text-decoration:none;
+  display:inline;
+  padding: 20px;
+  color:white;
+  margin-bottom: 50px;
+}
+li a{
+  text-decoration:none;
+  color:white;
+
+  padding:20px;
+  font-size: 25px;
+
+}
+ul{
+  list-style-type:none;
+  margin:0;
+  padding:20px 0px 20px 0px;
+}
+.navbar a:hover{
+opacity:0.7;
+}
+.navbar a:active{
+opacity:0.7;
+}
+footer .navbar li{
+  font-size: 20px;
+}
+.active{
+  background-color:#5e0e42;
+  color:white;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+#active:hover{
+  opacity: 0.7;
+  color:white;
+}
+.active1{
+  background-color:#5e0e42;
+  color:white;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+#active1:hover{
+  opacity: 0.7;
+  color:white;
+}
+@media (min-width: 992px) {
+  .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+    float: left;
+  }
+  .col-lg-1 {
+    width: 8.33%;
+  }
+  .col-lg-2 {
+    width: 16.66%;
+  }
+  .col-lg-3 {
+    width: 25%;
+  }
+  .col-lg-4 {
+    width: 33.33%;
+  }
+  .col-lg-5 {
+    width: 41.66%;
+  }
+  .col-lg-6 {
+    width: 50%;
+  }
+  .col-lg-7 {
+    width: 58.33%;
+  }
+  .col-lg-8 {
+    width: 66.66%;
+  }
+  .col-lg-9 {
+    width: 74.99%;
+  }
+  .col-lg-10 {
+    width: 83.33%;
+  }
+  .col-lg-11 {
+    width: 91.66%;
+  }
+  .col-lg-12 {
+    width: 100%;
+  }
+  
+}
+#section1{
+  font-size:20px;
+}
+/********** Medium devices only **********/
+
+@media (max-width: 929px) {
+  .col-s-1, .col-s-2, .col-s-3, .col-s-4, .col-s-5, .col-s-6, .col-s-7, .col-s-8, .col-s-9, .col-s-10, .col-s-11, .col-s-12 {
+    float: left;
+  }
+  .col-s-1 {
+    width: 8.33%;
+  }
+  .col-s-2 {
+    width: 16.66%;
+  }
+  .col-s-3 {
+    width: 25%;
+  }
+  .col-s-4 {
+    width: 33.33%;
+  }
+  .col-s-5 {
+    width: 41.66%;
+  }
+  .col-s-6 {
+    width: 50%;
+  }
+  .col-s-7 {
+    width: 58.33%;
+  }
+  .col-s-8 {
+    width: 66.66%;
+  }
+  .col-s-9 {
+    width: 74.99%;
+  }
+  .col-s-10 {
+    width: 83.33%;
+  }
+  .col-s-11 {
+    width: 91.66%;
+  }
+  .col-s-12 {
+    width: 100%;
+  }
+  footer .navbar li{
+  font-size: 8px;
+}
+}
+.section{
+
+  background-color:white;
+  margin: 20px;
+  padding: 0px 0px 0px 00px;
+ height:600px;
+ border-radius: 20px;
+ box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+ font-size: 15px;
+ 
+}
+.section:hover
+{ 
+  
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 10px 20px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+*{
+  box-sizing: border-box;
+}
+span{
+
+  color:black;
+  width:100%;
+  display:block;
+  text-align:center;
+  font-size:30px;
+  padding:5px;
+}
+
+#prev{
+  position:relative;
+ padding:10px 20px;
+ float: left;
+ margin-left:50px;
+ background-color:white;
+  color:#5e0e42;
+ border:none;
+font-size: 20px;
+}
+#next{
+position: relative;
+ padding:10px 20px;
+ float: right;
+ margin-right: 50px;
+ background-color:white;
+  color:#5e0e42;
+ border:none;
+ font-size: 20px;
+}
+#prev:active{
+ color: black;
+}
+#next:active{
+  color: black;
+}
+#button1{
+  background-color: #4CAF50; /* Green */
+  border: red;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+
+}
+#button1:hover{
+  background-color:blue;
+  opacity:0.9;
+}
+h1{
+  background-color:red;
+}
+#graph1{
+  display:inline;
+  display: flex;
+  justify-content: center;
+    size:inherit;
+  
+}
+#graph2{
+  display:inline;
+ align: center;
+ display: flex;
+  justify-content: center;
+    size:inherit;
+
+}
+#bargraph{
+  display:inline;
+ align: center;
+ display: flex;
+  justify-content: center;
+  size:inherit;
+
+}
+#hidden{
+  display:none;
+}
+p{
+  font-size:20px;
+}
+#working{
+  background-color:#e60000;
+  width:200px;
+   padding: 15px 32px;
+  text-align:center;
+  color:white;
+ 
+}
+
+</style>
+ 
+    <title>Sleep Analyser</title>
+   
+  </head>
+<body> 
+<nav class ="navbar">
+<ul>
+
+<li class = "active"><a href = "192.168.73.43">APP</a></li>
+<li><a href = "https://sakthiram17.github.io/FirstRepo/projects/biomed/sleepinducer/home.html">Guide</a></li>
+</ul>
+</nav>
+<div class="row">
+  <div class="col-lg-6 col-md-6 col-s-12">
+    <div class = "section" id ="secion1">
+    <span class = "sectiont">Data Fetcher</span>
+  <p id ="text">
+  <div id ="centerbutton">
+
+  <button id = "button1" type = "button">Get Sleep Analysis</button>
+</div>
+    
+  </p>
+ <div id = "centerrun">
+  <p id ="working">The Device is not Running</p>
+  </div>
+  <div id = "centerclock">
+  <p id ="clock"></p>
+  </div>
+
+</div></div>
+
+ <div class="col-lg-6 col-md-6 col-s-12">
+    <div class = "section">
+    <span class = "sectiont">Movements detected</span>
+  <p>
+
+  <div id = "graph1"></div>
+     <button id = "prev" type = "button" class = " fa fa-arrow-circle-left"></button>
+   <button id = "next" type = "button"  class = " fa fa-arrow-circle-right"></button>
+  </p></div></div>
+ 
+ <div class="col-lg-6 col-md-6 col-s-12">
+    <div class = "section">
+    <span class = "sectiont">Distribution of Sleep</span>
+  <p>
+    <div id = "graph2"></div>
+  </p></div></div>
+  <div class="col-lg-6 col-md-6 col-s-12">
+    <div class = "section">
+    <span class = "sectiont">Sleep Distribution Bar Chart</span>
+  <p>
+    <div id = "bargraph"></div>
+  </p></div></div>
+
+</div>
+ 
+<script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> 
+<script type = "module">
+
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-analytics.js";
+  import{getDatabase, ref, set, child, update, remove,get}
+ from  "https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+  apiKey: "AIzaSyBgIWydOijimi0Hio9DLn692f-K1Ri_jlY",
+  authDomain: "sleepanalyzer2-b9951.firebaseapp.com",
+  databaseURL: "https://sleepanalyzer2-b9951-default-rtdb.firebaseio.com",
+  projectId: "sleepanalyzer2-b9951",
+  storageBucket: "sleepanalyzer2-b9951.appspot.com",
+  messagingSenderId: "22825152423",
+  appId: "1:22825152423:web:2b0c5dfa40a94a44d65082",
+  measurementId: "G-DE1W2KHVN3"
+};
+
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getDatabase();
+var arraylist = ["Mon","Tue","Wed","Th","Fri","Sat","Sun"];
+
+var data_set = "";
+function SelectData()
+ {
+   var ele = document.getElementsByClassName('active1');
+  var element = ele[0];
+  console.log(element.innerHTML)
+  var pos = arraylist.indexOf(element.innerHTML);
+  var url =`data${pos}`;
+  console.log(url);
+  const dbref = ref(db);
+  get(child(dbref,url)).then(snapshot=>{
+  var movements = snapshot.val();
+  console.log(movements);
+ data_set = movements;
+
+ });
+}
+
+var next_click = 0;
+var prev_click = 0;
+document.getElementById("button1").addEventListener("click", Plot_Graphs);
+var data_set = [];
+function setTime()
+{
+var d = new Date();
+var Hour = d.getHours();
+var minute = d.getMinutes();
+var second = d.getSeconds();
+document.getElementById("clock").textContent =String(Hour)+':'+String(minute)+':'+String(second);}
+var x = [];
+var time = [];
+for (var i = 0; i < 500; i ++) {
+  x[i] = Math.random();
+}
+var trace = {
+    x: x,
+    type: 'histogram',
+  };
+var data = [trace];
+var data2 = [{
+  values: [19, 26, 55],
+  labels: ['REM Sleep', 'Deep Sleep', 'Light Sleep','Awake'],
+  type: 'pie'
+}];
+var layout = {
+  autosize: true,
+  width: 400,
+  height: 400,
+  margin: {
+    l: 5,
+    r: 5,
+    b: 10,
+    t: 10,
+    pad: 4
+  },
+};
+var layout1 = {
+  autosize:true
+};
+var data4 = [
+  {
+    x: ['REM SLeep (in hours)', 'Deep Sleep (in hours)', 'Light Sleep(in hours)','Awake (in hours)'],
+    y: [3, 4, 1,2],
+    type: 'bar',
+     marker: {
+    line: {
+      width: 2
+    }
+  }
+    
+  }
+];
+
+var time_iter = 0;
+var time = [];
+Plotly.newPlot('graph2', data2,layout);
+Plotly.newPlot('graph1', data,layout);
+Plotly.newPlot('bargraph',data4,layout1);
+
+setInterval(function() {
+  
+    setTime();
+}, 1000); 
+
+
+document.getElementById("prev").addEventListener("click", move_prev);
+document.getElementById("next").addEventListener("click", move_next);
+function move_next()
+{ 
+  if(next_click>prev_click)
+  {
+    alert("You are at the end of Graph");
+  }
+  time1 = time.slice(data_set1.length-100,data.set1.length-1)
+  next_click = next_click+1;
+  data_set1 = data_set.split("");
+ new_data_set = data_set1.slice(data_set1.length-(prev_click-next_click)*100,data_set1.length-(prev_click-next_click-1)*100);
+var data_0 = [
+  {
+    x: time1,
+    y: new_data_set,
+    type: 'bar'
+  }
+];
+
+Plotly.newPlot('graph1', data_0);
+}
+function move_prev()
+{ time1 = time.slice(data_set1.length-100,data_set1.length-1)
+  if((prev_click*99>data_set.length))
+  {
+    alert("You are at the end of Graph");
+  }
+  prev_click = prev_click +1;
+  data_set1 = data_set.split("");
+ new_data_set = data_set1.slice(data_set1.length-(prev_click-next_click)*100,data_set1.length-(prev_click-next_click-1)*100)
+var data_0 = [
+  {
+    x: time1,
+    y: new_data_set,
+    type: 'bar'
+  }
+];
+
+Plotly.newPlot('graph1', data_0);
+}
+function Plot_Graphs()
+{
+  SelectData();
+  if(data_set.length>1&&data_set!=null)
+  {
+  x = data_set.split("");
+}
+
+
+var data_set1 = data_set;
+
+var plot_data_set = data_set1.slice(data_set.length-100,data_set.length-1);
+if(time.length>=100)
+{
+var time1 = time.slice(data_set.length-100,data_set.length-1);
+var data_0 = [
+  {
+    x: time1,
+    y: plot_data_set,
+    type: 'bar'
+  }
+];
+}else{
+  var data_0 = [
+  {
+    x: time,
+    y: plot_data_set,
+    type: 'bar'
+  }
+];
+}
+var n_rem = 1;
+var n_deep_sleep = 2;
+var n_light = 4;
+
+var total = x.length;
+var rem_percent = (n_rem/total)*100;
+var deep_percent = (n_deep_sleep/total)*100;
+var light_percent = (n_light/total)*100;
+var none_percent =  100 - rem_percent - deep_percent - light_percent;
+var data_2 = [{
+  values: [rem_percent, deep_percent, light_percent,none_percent],
+  labels: ['REM Sleep', 'Deep Sleep', 'Light Sleep','Awake'],
+  type: 'pie'
+}];
+var data4 = [
+  {
+    x: ['REM SLeep (in hours)', 'Deep Sleep (in hours)', 'Light Sleep(in hours)','Awake (in hours)'],
+    y: [rem_percent*total/360000,deep_percent*total/360000, light_percent*total/360000,none_percent*total/360000],
+    type: 'bar'
+  }
+];
+ console.log(data_set)
+Plotly.newPlot('graph1', data_0);
+Plotly.newPlot('graph2', data_2,layout);
+Plotly.newPlot('bargraph', data4);
+deep_percent = deep_percent.toFixed(0);
+if(deep_percent<80)
+{
+document.getElementById("text").textContent = "Your deep sleep percentage is "+deep_percent+"% .We Recommond you to use Sleep Inducer in mode I";
+}
+else if(deep_percent<50)
+{
+document.getElementById("text").textContent = "Your deep sleep percentage is "+deep_percent+"% .We Recommond you to use Sleep Inducer in mode II";
+}
+else if (deep_percent>=80){
+  document.getElementById("text").textContent = "Your deep sleep percentage is "+deep_percent+"% .You Sleep is good no need to use the device";
+}
+
+}
+var list = document.getElementsByClassName('toggle');
+for(var i = 0;i<list.length;i++)
+{
+  list[i].addEventListener('click',function()
+  {
+    
+    var elist = document.getElementsByClassName('active1');
+    var e = elist[0];
+    e.classList.remove('active1');
+    this.classList.add('active1');
+
+  });
+}
+
+
+ 
+ </script>
+<footer>
+  <nav class ="navbar">
+    <ul>
+    <li class = "active1 toggle" value = "Mon">Mon</li>
+    <li class = "toggle">Tue</li>
+    <li class = "toggle">Wed</li>
+    <li class = "toggle">Th</li>
+    <li class = "toggle">Fri</li>
+    <li class = "toggle">Sat</li>
+    <li class = "toggle">Sun</li>
+    <li class = "toggle">Overall</li>
+    </ul>
+    </nav>
+</footer>
+</body>
+
+</html>
