@@ -198,8 +198,11 @@ footer .navbar li{
   .col-s-12 {
     width: 100%;
   }
-footer .navbar li{
+  footer .navbar li{
   display: block;
+  width: 100%;
+  padding-left: 100px;
+  padding-right:100px ;
 }
 }
 .section{
@@ -207,7 +210,7 @@ footer .navbar li{
   background-color:white;
   margin: 20px;
   padding: 0px 0px 0px 00px;
- height:600px;
+ height:700px;
  border-radius: 20px;
  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
  font-size: 15px;
@@ -231,6 +234,9 @@ span{
   font-size:30px;
   padding:5px;
 }
+.section p{
+  padding:20px;
+}
 
 #prev{
   position:relative;
@@ -240,7 +246,7 @@ span{
  background-color:white;
   color:#5e0e42;
  border:none;
-font-size: 20px;
+font-size: 40px;
 }
 #next{
 position: relative;
@@ -250,7 +256,7 @@ position: relative;
  background-color:white;
   color:#5e0e42;
  border:none;
- font-size: 20px;
+ font-size: 40px;
 }
 #prev:active{
  color: black;
@@ -373,7 +379,8 @@ p{
  
 <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> 
 <script type = "module">
-
+var datelist = [];
+var start_time;
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-analytics.js";
@@ -409,14 +416,29 @@ function SelectData()
   console.log(element.innerHTML)
   var pos = arraylist.indexOf(element.innerHTML);
   var url =`data${pos}`;
-  console.log(url);
   const dbref = ref(db);
   get(child(dbref,url)).then(snapshot=>{
   var movements = snapshot.val();
-  console.log(movements);
+  
  data_set = movements;
 
  });
+
+ get(child(dbref,"starttime")).then(snapshot=>{
+  start_time = snapshot.val();
+
+ });
+ var newdate_start = new Date(start_time);
+ var newdate = new Date(start_time);
+ for(var i =0;i<data_set.length;i++)
+ { 
+
+   datelist.push(newdate);
+  time.push(newdate.getSeconds()-newdate_start.getSeconds());
+   newdate.setSeconds(newdate.getSeconds()+1);
+
+ }
+ 
 }
 
 var next_click = 0;
@@ -530,18 +552,18 @@ Plotly.newPlot('graph1', data_0);
 function Plot_Graphs()
 {
   SelectData();
-  if(data_set.length>1&&data_set!=null)
-  {
-  x = data_set.split("");
-}
+ console.log(typeof(data_set))
+  data_set = data_set.split("");
 
 
 var data_set1 = data_set;
+var plot_data_set = data_set;
 
-var plot_data_set = data_set1.slice(data_set.length-100,data_set.length-1);
 if(time.length>=100)
 {
+  var plot_data_set = data_set1.slice(data_set.length-100,data_set.length-1);
 var time1 = time.slice(data_set.length-100,data_set.length-1);
+ 
 var data_0 = [
   {
     x: time1,
@@ -550,10 +572,12 @@ var data_0 = [
   }
 ];
 }else{
+  console.log(time.length);
+  console.log(plot_data_set.length);
   var data_0 = [
   {
     x: time,
-    y: plot_data_set,
+    y: x,
     type: 'bar'
   }
 ];
@@ -584,6 +608,9 @@ Plotly.newPlot('graph1', data_0);
 Plotly.newPlot('graph2', data_2,layout);
 Plotly.newPlot('bargraph', data4);
 deep_percent = deep_percent.toFixed(0);
+data_set = [];
+time = [];
+datelist = [];
 if(deep_percent<80)
 {
 document.getElementById("text").textContent = "Your deep sleep percentage is "+deep_percent+"% .We Recommond you to use Sleep Inducer in mode I";
