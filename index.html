@@ -78,6 +78,13 @@ li a{
   font-size: 25px;
 
 }
+#summary a{
+  text-decoration: none;
+  font-size: 20px;
+  padding:0px;
+
+
+}
 ul{
   list-style-type:none;
   margin:0;
@@ -107,7 +114,11 @@ footer .navbar li{
   color:white;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }footer .navbar li:hover{
-  color:#5e0e42;
+  opacity: 0.8;
+  background-color: #5e0e42;
+}
+footer .navbar li a:hover{
+  color:white;
 }
 .active1:hover{
   opacity: 0.7;
@@ -319,7 +330,7 @@ p{
    padding: 15px 32px;
   text-align:center;
   color:white;}
-@media (prefers-color-scheme: dark) {
+/*@media (prefers-color-scheme: dark) {
     body {
         background-color: black;
         color: white;
@@ -330,7 +341,7 @@ p{
       background:#5e0e42;
       color: white;
     }
-}
+}*/
 .brand i{
   color:#5e0e42;
   font-size: 50px;
@@ -340,7 +351,15 @@ p{
  left: 50px;
  top:-10px;
 }
-
+li{
+  padding-left: 20px;
+  font-size: 18px;
+}
+.span2{
+  font-size: 18px;
+  color: blue;
+  display: inline;
+}
 </style>
  
     <title>Sleep Analyser</title>
@@ -364,11 +383,22 @@ p{
 
   <button id = "button1" type = "button">Get Sleep Analysis</button>
 </div>
+<div id = "fill">
+  <ul>
+  <li>Total Hours of Sleep <span class ="span2" id ="sleep"></span></li>
+  <li>Total Hours of Recording <span class ="span2" id ="record"></span></li>
+  
+  <li>Total Hours of DEEP Sleep <span class ="span2" id = "dsleep"></span></li>
+  <li>Total Hours of REM Sleep <span class ="span2" id = "rsleep"></span></li>
+  <li>Total Hours of LIGHT Sleep <span class ="span2" id = "lsleep"></span></li>
+  <li>Total Hours of Awakeness <span class ="span2" id = "asleep"></span></li>
+ 
+  <li>Sleep index<span id ="index" class ="span2"></span></li>
+</ul>
+</div>
     
   </p>
- <div id = "centerrun">
-  <p id ="working">The Device is not Running</p>
-  </div>
+
   <div id = "centerclock">
   <p id ="clock"></p>
   </div>
@@ -833,6 +863,15 @@ var rem_percent = (n_rem/total)*100;
 var deep_percent = (n_deep_sleep/total)*100;
 var light_percent = (n_light/total)*100;
 var none_percent =  100 - rem_percent - deep_percent - light_percent;
+
+var am = none_percent * total/100;
+document.getElementById('sleep').innerHTML = ((n_rem+n_light+n_deep_sleep)/3600).toFixed(2);
+document.getElementById('record').innerHTML = (total/3600).toFixed(2);
+document.getElementById('lsleep').innerHTML = (n_light/3600).toFixed(2);
+document.getElementById('rsleep').innerHTML = (n_rem/3600).toFixed(2);
+document.getElementById('dsleep').innerHTML = (n_deep_sleep/3600).toFixed(2);
+document.getElementById('asleep').innerHTML = (none_percent*(total)/360000).toFixed(2);
+document.getElementById('index').innerHTML = ((total/(total+am))).toFixed(2);
 var data_2 = [{
   values: [rem_percent, deep_percent, light_percent,none_percent],
   labels: ['REM Sleep', 'Deep Sleep', 'Light Sleep','Awake'],
@@ -872,6 +911,9 @@ else{
 
 }
 }
+
+
+
 
 
 Plotly.newPlot('graph1', data_0,layout);
@@ -1129,8 +1171,10 @@ if(data.length==0)
 }
 return (parseFloat(sum/data.length));
 }
+var sumdataset = [];
+var sumdataset2 = [];
 
- </script>
+</script>
  <script src = "script.js"></script>
 <footer>
   <nav class ="navbar">
@@ -1142,7 +1186,7 @@ return (parseFloat(sum/data.length));
     <li class = "toggle">Fri</li>
     <li class = "toggle">Sat</li>
     <li class = "toggle">Sun</li>
-    <li class = "toggle">Overall</li>
+    <li class = "toggle" id ="summary"><a href ="summary.html">Overall</a></li>
     </ul>
     </nav>
 </footer>
