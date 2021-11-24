@@ -72,6 +72,16 @@ li a{
   padding:0px;
 
 
+}#modal{
+    position: fixed;
+    left: 20%;
+    top:40%;
+    height: 600px;
+    width: 600px;
+    background-color:#E6C1A6;
+    border-radius: 30px;
+    border: solid #5e0e42 5px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 10px 20px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 ul{
@@ -161,10 +171,11 @@ footer .navbar li a:hover{
 }
 /********** Medium devices only **********/
 
-@media (max-width: 929px) {
+@media (max-width: 929px){
   .col-s-1, .col-s-2, .col-s-3, .col-s-4, .col-s-5, .col-s-6, .col-s-7, .col-s-8, .col-s-9, .col-s-10, .col-s-11, .col-s-12 {
     float: left;
   }
+ 
   .col-s-1 {
     width: 8.33%;
   }
@@ -200,12 +211,30 @@ footer .navbar li a:hover{
   }
   .col-s-12 {
     width: 100%;
+  } .brand{
+    display: none;
+    visibility: hidden;
   }
+ 
   footer .navbar li{
   display: block;
   width: 100%;
   padding-left: 100px;
   padding-right:100px;
+}
+
+
+
+#modal{
+    position: fixed;
+    left: 20%;
+    top:40%;
+    height:400px;
+    width: 300px;
+    background-color:#E6C1A6;
+    border-radius: 30px;
+    border: solid #5e0e42 5px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 10px 20px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 }
 .section{
@@ -352,4 +381,12 @@ li{
 #goback:hover{
 color:#5e0e42;
 background-color: #E6C1A6;
+}
+#signin{
+position: absolute;
+right: 50px;
+}
+#signin:active, #signin:hover{
+opacity: 0.8;
+font-size: 30px;
 }
