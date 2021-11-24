@@ -17,7 +17,6 @@
 <body> 
 <nav class ="navbar">
 <ul>
-
   <li class = "brand"><i class = "fa fa-heartbeat"></i></li>
 <li class = "active"><a href = "index.html">APP</a></li>
 <li><a href = "project.html">Guide</a></li>
@@ -78,6 +77,11 @@
   </p></div></div>
 
 </div>
+<div class = "modal" id = "modal">
+  <div class = "closebtn">
+  <i class = "fa fa-window-close" id = "closebtn"></i>
+  </div>
+</div>
 <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> 
 <script type = "module">
 var datelist = [];
@@ -93,7 +97,7 @@ var size =500;
 var mat = window.matchMedia("(max-width:500px)");
 if(mat.matches)
 {
-size = 350;
+size = 320;
 }
 // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
@@ -123,6 +127,8 @@ var datelist = [];
   const db = getDatabase();
 var arraylist = ["Mon","Tue","Wed","Th","Fri","Sat","Sun"];
 
+
+
 var data_set = "";
 var datelist_str = [];
 function SelectData()
@@ -131,11 +137,11 @@ function SelectData()
   var element = ele[0];
   var pos = arraylist.indexOf(element.innerHTML);
   var url =`data${pos}`;
-  console.log(url)
+
   const dbref = ref(db);
   get(child(dbref,url)).then(snapshot=>{
   var movements = snapshot.val();
-  console.log(data_set);
+
  data_set = movements;
  datelist = [];
  
@@ -411,7 +417,7 @@ else{
  
   
 };}
-
+console.log(data_set.length)
 
 Plotly.newPlot('graph1', data_0,layout);
 }
@@ -454,7 +460,6 @@ let vectors = new Array();
 for (let i = 0 ; i < data_set.length ; i++) {
   vectors[i] = [data_set[i],time[i]];
 }
-console.log(vectors)
 var res = kmeans(vectors,4);
 
 
