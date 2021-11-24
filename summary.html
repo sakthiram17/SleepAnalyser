@@ -52,7 +52,7 @@
 
  
  
- 
+<div class="loader"></div>
  
 <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> 
 <script type = "module">
@@ -108,13 +108,31 @@ function getData()
  {
   var url =`data${i}`;
   const dbref = ref(db);
+  displayload();
+ if(i==6)
+ {
   get(child(dbref,url)).then(snapshot=>{
   var movements = snapshot.val();
-  
- sumdataset2 = sumdataset2 + movements;
+ 
+  dispdata();
+
+  hideload();
+
+  sumdataset2 = sumdataset2 + movements;
  });
  }
- setTimeout( function(){
+ else{
+  get(child(dbref,url)).then(snapshot=>{
+  var movements = snapshot.val();
+ 
+
+  sumdataset2 = sumdataset2 + movements;
+ });
+
+
+ }
+ }
+function dispdata(){
 
  var space = document.getElementById('fill');
  var total_hours = sumdataset2.length/3600;
@@ -200,9 +218,7 @@ sumdataset =[];
    time3 = [];
 sumdataset3 = [];
 vectors1= [];
-},2000);
-}
-
+}}
 
 
 
@@ -427,6 +443,21 @@ if(data.length==0)
   return 1;
 }
 return (parseFloat(sum/data.length));
+}
+function displayload()
+{
+ var loader  = document.getElementsByClassName('loader');
+ loader = loader[0];
+loader.style.display = "block";
+}
+function hideload()
+{
+  var loader  = document.getElementsByClassName('loader');
+ loader = loader[0];
+ console.log("closing stuff")
+ loader.style.removeProperty('display');
+loader.style.display = "none";
+loader.style.visibility= "hidden";
 }
 
 </script>
