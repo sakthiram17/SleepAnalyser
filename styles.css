@@ -257,6 +257,16 @@ li{
 color:#5e0e42;
 background-color: #E6C1A6;
 }
+#signin{
+position: absolute;
+right: 50px;
+}
+#signin:active{
+opacity: 0.8;
+font-size: 20px;
+color: #5e0e42;
+}
+
 
 
 
@@ -371,10 +381,34 @@ span{
   font-size: 15px;
 }
 .navbar li a{
-  font-size: 15px;
+  font-size: 20px;
 }
 #fill ul li{
-  font-size: 15px;
+  font-size:20px;
 }
-  
+}
+.loader {
+  border: 8px dotted #E6C1A6;
+  border-radius: 50%;
+  border-top: 8px dotted #5e0e42;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: absolute;
+  left: 30%;
+  top:40%;
+  display: none;
+}
+
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
