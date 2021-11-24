@@ -95,10 +95,15 @@ const dbref = ref(db);
 var sumbtn = document.getElementById('button1');
 sumbtn.onclick = getData;
 var sumdataset =[];
-    var sumdataset2 = "";
-
+var sumdataset2 = "";
+var time3 = [];
+var sumdataset3 = [];
 function getData()
 {  
+  sumdataset2 = "";
+  time3 = "";
+  sumdataset3 = [];
+  
  for (var i = 0;i<7;i++)
  {
   var url =`data${i}`;
@@ -106,11 +111,10 @@ function getData()
   get(child(dbref,url)).then(snapshot=>{
   var movements = snapshot.val();
   
- sumdataset.push(movements);
  sumdataset2 = sumdataset2 + movements;
  });
  }
- 
+ setTimeout( function(){
 
  var space = document.getElementById('fill');
  var total_hours = sumdataset2.length/3600;
@@ -182,7 +186,7 @@ for(var i = 0;i<sumdataset3.length;i++)
     }
 
 }
-
+console.log(sumdataset2.length)
 document.getElementById('sleep').innerHTML = total_sleep.toFixed(2);
 document.getElementById('record').innerHTML = total_hours.toFixed(2);
 document.getElementById('lsleep').innerHTML = n_light.toFixed(2);
@@ -193,7 +197,10 @@ document.getElementById('avgsleep').innerHTML = avgsleep.toFixed(2);
 document.getElementById('sleepindex').innerHTML = ((sumdataset3.length)/(ml+sumdataset3.length)).toFixed(2);
 sumdataset =[];
    sumdataset2 = "";
-
+   time3 = [];
+sumdataset3 = [];
+vectors1= [];
+},2000);
 }
 
 
