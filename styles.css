@@ -257,30 +257,8 @@ li{
 color:#5e0e42;
 background-color: #E6C1A6;
 }
-#signin{
-position: absolute;
-right: 50px;
-}
-#signin:active{
-opacity: 0.8;
-font-size: 20px;
-color: #5e0e42;
-}
 
 
-#modal{
-  display: none !important;
-  position: fixed;
-  left: 20%;
-  top:40%;
-  height: 600px;
-  width: 500px;
-  z-index: 100;
-  background-color:#E6C1A6;
-  border-radius: 30px;
-  border: solid #5e0e42 5px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 10px 20px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-}
 
 
 @media (min-width: 992px) {
@@ -398,4 +376,5 @@ span{
 #fill ul li{
   font-size: 15px;
 }
+  
 }
