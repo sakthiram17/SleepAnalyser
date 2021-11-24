@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Arvo:ital@1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href = "styles.css">
- 
+<link rel="stylesheet" href = "alert.css">
     <title>Sleep Analyser</title>
    
   </head>
@@ -77,8 +77,14 @@
   </p></div></div>
 
 </div>
-
+<div class = "modal" id = "modal">
+  <div class = "closebtn">
+  <i class = "fa fa-window-close" id = "closebtn"></i>
+  </div>
+</div>
+<div class="loader"></div>
 <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> 
+<script src = "alert.js"></script>
 <script type = "module">
 var datelist = [];
 var start_time;
@@ -125,9 +131,10 @@ var arraylist = ["Mon","Tue","Wed","Th","Fri","Sat","Sun"];
 
 
 
+
 var data_set = "";
 var datelist_str = [];
-function SelectData()
+ function SelectData()
  {
    var ele = document.getElementsByClassName('active1');
   var element = ele[0];
@@ -135,7 +142,8 @@ function SelectData()
   var url =`data${pos}`;
 
   const dbref = ref(db);
-  get(child(dbref,url)).then(snapshot=>{
+  displayload();
+ get(child(dbref,url)).then(snapshot=>{
   var movements = snapshot.val();
 
  data_set = movements;
@@ -144,9 +152,12 @@ function SelectData()
 var t = [];
  var newdate_start = new Date(start_time);
  var newdate = new Date(start_time);
+ hideload(); 
+ Plot_Graphs();
+
  for(var i =0;i<data_set.length;i++)
  { 
-
+  
    datelist.push(newdate);
    datelist_str.push(newdate.toDateString());
   t.push(i);
@@ -157,17 +168,17 @@ var t = [];
 
  });
 
- get(child(dbref,"starttime")).then(snapshot=>{
-  start_time = snapshot.val();
+ //get(child(dbref,"starttime")).then(snapshot=>{
+  //start_time = snapshot.val();
 
- });
+ //});
  
- 
+
 }
  
 var next_click = 0;
 var prev_click = 0;
-document.getElementById("button1").addEventListener("click", Plot_Graphs);
+document.getElementById("button1").addEventListener("click", SelectData);
 var data_set = [];
 function setTime()
 {
@@ -549,19 +560,8 @@ else{
 
 }
 }
-if(time.length>=100)
-{ data_set1 = data_set.split("");
-  var plot_data_set = data_set1.slice(data_set.length-100,data_set.length-1);
-  var time1 = datelist_str.slice(data_set.length-100,data_set.length-1);
- console.log(data_set)
-var data_0 = [
-  {
-    x: time1,
-    y: plot_data_set,
-    type: 'bar'
-  }
-];
-}else{
+
+
 
   var data_0 = [
   {
@@ -570,7 +570,7 @@ var data_0 = [
     type: 'bar'
   }
 ];
-}
+
 
 
 
@@ -608,6 +608,23 @@ for(var i = 0;i<list.length;i++)
 
   });
 }
+function displayload()
+{
+ var loader  = document.getElementsByClassName('loader');
+ loader = loader[0];
+loader.style.display = "block";
+}
+function hideload()
+{
+  var loader  = document.getElementsByClassName('loader');
+ loader = loader[0];
+ console.log("closing stuff")
+ loader.style.removeProperty('display');
+loader.style.display = "none";
+loader.style.visibility= "hidden";
+}
+
+
 //Clustering Algorithm start
 const MAX_ITERATIONS = 50;
 
