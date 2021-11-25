@@ -186,7 +186,7 @@ position: relative;
 
 
 }
-#button1:hover{
+#button1:active{
   background-color:blue;
   opacity:0.9;
 }
@@ -202,7 +202,7 @@ h1{
 }
 #graph2{
   display:inline;
- align: center;
+
  display: flex;
   justify-content: center;
     size:inherit;
@@ -210,10 +210,9 @@ h1{
 }
 #bargraph{
   display:inline; 
-
+  align: center;
  display: flex;
   justify-content: center;
-  size:inherit;
 
 }
 #hidden{
@@ -257,16 +256,6 @@ li{
 color:#5e0e42;
 background-color: #E6C1A6;
 }
-#signin{
-position: absolute;
-right: 50px;
-}
-#signin:active{
-opacity: 0.8;
-font-size: 20px;
-color: #5e0e42;
-}
-
 
 
 
