@@ -77,11 +77,7 @@
   </p></div></div>
 
 </div>
-<div class = "modal" id = "modal">
-  <div class = "closebtn">
-  <i class = "fa fa-window-close" id = "closebtn"></i>
-  </div>
-</div>
+
 <div class="loader"></div>
 <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> 
 <script src = "alert.js"></script>
@@ -148,13 +144,13 @@ var datelist_str = [];
 
  data_set = movements;
  datelist = [];
- 
+ start_time = "11-12-21";
 var t = [];
  var newdate_start = new Date(start_time);
  var newdate = new Date(start_time);
  hideload(); 
  Plot_Graphs();
-
+datelist_str  = [];
  for(var i =0;i<data_set.length;i++)
  { 
   
@@ -424,7 +420,6 @@ else{
  
   
 };}
-console.log(data_set.length)
 
 Plotly.newPlot('graph1', data_0,layout);
 }
@@ -572,11 +567,9 @@ else{
 ];
 
 
+console.log(datelist_str.length)
 
-
-
-
-Plotly.newPlot('graph1', data_0,layout);
+Plotly.newPlot('graph1', data_0);
 Plotly.newPlot('graph2', data_2,layout);
 Plotly.newPlot('bargraph', data4,layout2);
 deep_percent = deep_percent.toFixed(0);
@@ -618,7 +611,6 @@ function hideload()
 {
   var loader  = document.getElementsByClassName('loader');
  loader = loader[0];
- console.log("closing stuff")
  loader.style.removeProperty('display');
 loader.style.display = "none";
 loader.style.visibility= "hidden";
