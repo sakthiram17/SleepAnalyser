@@ -81,7 +81,7 @@ var colour = "black";
   appId: "1:22825152423:web:2b0c5dfa40a94a44d65082",
   measurementId: "G-DE1W2KHVN3"
 };
-
+var awake = 0;
 var time = [];
 var datelist = [];
   const app = initializeApp(firebaseConfig);
@@ -113,12 +113,12 @@ function getData()
  {
   get(child(dbref,url)).then(snapshot=>{
   var movements = snapshot.val();
- 
   sumdataset2 = sumdataset2 + movements;
   dispdata();
 
   hideload();
 
+  
  });
  }
  else{
@@ -133,7 +133,7 @@ function getData()
  }
  }
 function dispdata(){
-
+  console.log(sumdataset2)
  var space = document.getElementById('fill');
  var total_hours = sumdataset2.length/3600;
 var sumdataset3 = sumdataset2.split("");
@@ -147,53 +147,50 @@ var total_awake = total_hours - total_sleep;
 var avgsleepperday = total_sleep/7;
 let vectors1 = new Array();
 var time3 = [];
-
 for(var i =0;i<sumdataset3.length;i++)
 {
   time3.push(i);
 }
-for (let i = 0 ; i < sumdataset2.length ; i++) {
-  vectors1[i] = [sumdataset3[i],time3[i]];
-}
-var res = kmeans(vectors1,4);
-var sleepindex = [];
-for(var i =0;i<4;i++)
-{
-sleepindex.push(calcsleepindex(res.clusters[i].points));
-}
-var rem;
-var deep;
-var light;
-var awake;
-var newsleepindex = sleepindex;
-newsleepindex.sort();
-for(var i =0;i<4;i++)
-{
-for(var j = 0;j<4;j++)
-{
-  if(newsleepindex[i]==sleepindex[j])
+for (let i = 0 ; i < sumdataset3.length ; i++) {
+
+  if(sumdataset3[i]==1)
   {
-     var pos = j;
+   vectors1.push([10, time3[i]])
   }
 }
-if(pos==3)
-{
-  deep = res.clusters[i].points;
-}
-else if(pos==2){
-  light = res.clusters[i].points;
-}
-else if(pos==1)
-{
-  rem= res.clusters[i].points;
-}
-else{
-  awake = res.clusters[i].points;
-}
-}
+console.log(vectors1)
+var res = kmeans(vectors1,4);
+var array = [res.clusters[0].points,res.clusters[1].points,res.clusters[2].points,res.clusters[3].points]
+function bblSort(arr){
+     
+     for(var i = 0; i < arr.length; i++){
+         
+       // Last i elements are already in place  
+       for(var j = 0; j < ( arr.length - i -1 ); j++){
+           
+         // Checking if the item at present iteration 
+         // is greater than the next iteration
+         if(calcsleepindex(arr[j]) > calcsleepindex(arr[j])){
+             
+           // If the condition is true then swap them
+           var temp = arr[j]
+           arr[j] = arr[j + 1]
+           arr[j+1] = temp
+         }
+       }
+     }
+     // Print the sorted array
+  return arr;
+    }
+var array = bblSort(array);
+
+var awake = array[3]/3600;
+  var rem = array[2]/3600;
+  var light= array[1]/3600;
+ var n_deep_sleep = (sumdataset3.length - vectors1.length)/3600;
+
 var n_rem = rem.length/3600;
 
-var n_deep_sleep = deep.length/3600;
 var n_light = light.length/3600;
 var avgsleep = total_sleep/7;
 var ml = 0;
@@ -204,7 +201,7 @@ for(var i = 0;i<sumdataset3.length;i++)
     }
 
 }
-console.log(sumdataset2.length)
+
 document.getElementById('sleep').innerHTML = total_sleep.toFixed(2);
 document.getElementById('record').innerHTML = total_hours.toFixed(2);
 document.getElementById('lsleep').innerHTML = n_light.toFixed(2);
