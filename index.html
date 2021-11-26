@@ -10,7 +10,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Arvo:ital@1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href = "styles.css">
-<link rel="stylesheet" href = "alert.css">
     <title>Sleep Analyser</title>
    
   </head>
@@ -457,11 +456,11 @@ function sumof(arr)
   return sum
 }
 
-
 let vectors = new Array();
 for (let i = 0 ; i < data_set.length ; i++) {
-  vectors[i] = [data_set[i],time[i]];
+  vectors[i] = [parseInt(data_set[i]),time[i]];
 }
+console.log(vectors)
 var res = kmeans(vectors,4);
 
 
@@ -484,23 +483,23 @@ for(var j = 0;j<4;j++)
 }
 if(pos==3)
 {
-  deep = res.clusters[i].points;
+  deep = res.clusters[i].points||[0];
 }
 else if(pos==2){
-  light = res.clusters[i].points;
+  light = res.clusters[i].points||[0];
 }
 else if(pos==1)
 {
-  rem= res.clusters[i].points;
+  rem= res.clusters[i].points||[0];
 }
 else{
-  awake = res.clusters[i].points;
+  awake = res.clusters[i].points||[0];
 }
 }
 
-var n_rem = rem.length;
-var n_deep_sleep = deep.length;
-var n_light = light.length;
+var n_rem = rem.length||0;
+var n_deep_sleep = deep.length||0;
+var n_light = light.length||0;
 
 var total = data_set.length;
 var rem_percent = (n_rem/total)*100;
