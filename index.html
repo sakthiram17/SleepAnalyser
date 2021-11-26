@@ -28,7 +28,7 @@
   <p id ="text">
   <div id ="centerbutton">
 
-  <button id = "button1" type = "button">Get Sleep Analysis</button>
+  <button id = "button1" >Get Sleep Analysis</button>
 </div>
 <div id = "fill">
   <ul>
@@ -79,7 +79,7 @@
 
 <div class="loader"></div>
 <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> 
-<script src = "alert.js"></script>
+
 <script type = "module">
 var datelist = [];
 var start_time;
@@ -142,24 +142,23 @@ var datelist_str = [];
   var movements = snapshot.val();
 
  data_set = movements;
- datelist = [];
- start_time = "11-12-21";
+
 var t = [];
- var newdate_start = new Date(start_time);
- var newdate = new Date(start_time);
- hideload(); 
- Plot_Graphs();
-datelist_str  = [];
+
  for(var i =0;i<data_set.length;i++)
  { 
   
-   datelist.push(newdate);
-   datelist_str.push(newdate.toDateString());
+
   t.push(i);
-   newdate.setSeconds(newdate.getSeconds()+1);
+
 
  }
  time = t;
+datelist_str  = [];
+console.log(data_set.length)
+ Plot_Graphs();
+ hideload(); 
+ 
 
  });
 
@@ -425,7 +424,6 @@ Plotly.newPlot('graph1', data_0,layout);
 
 function Plot_Graphs()
 {
-  SelectData();
  if(typeof(data_set)=="string")
   data_set = data_set.split("");
 
@@ -458,47 +456,47 @@ function sumof(arr)
 
 let vectors = new Array();
 for (let i = 0 ; i < data_set.length ; i++) {
-  vectors[i] = [parseInt(data_set[i]),time[i]];
+  if(data_set[i]=='1')
+  vectors.push([10,time[i]])
+
 }
-console.log(vectors)
-var res = kmeans(vectors,4);
 
-
+var res = kmeans(vectors,4,true);
+console.log(res)
 var sleepindex = [];
-for(var i =0;i<4;i++)
-{
-sleepindex.push(calcsleepindex(res.clusters[i].points));
-}
-var newsleepindex = sleepindex;
-newsleepindex.sort();
-for(var i =0;i<4;i++)
-{
+var array = [res.clusters[0].points,res.clusters[1].points,res.clusters[2].points,res.clusters[3].points]
+function bblSort(arr){
+     
+     for(var i = 0; i < arr.length; i++){
+         
+       // Last i elements are already in place  
+       for(var j = 0; j < ( arr.length - i -1 ); j++){
+           
+         // Checking if the item at present iteration 
+         // is greater than the next iteration
+         if(calcsleepindex(arr[j]) > calcsleepindex(arr[j])){
+             
+           // If the condition is true then swap them
+           var temp = arr[j]
+           arr[j] = arr[j + 1]
+           arr[j+1] = temp
+         }
+       }
+     }
+     // Print the sorted array
+  return arr;
+    }
+var array = bblSort(array);
+      
 
-for(var j = 0;j<4;j++)
-{
-  if(newsleepindex[i]==sleepindex[j])
-  {
-     var pos = j;
-  }
-}
-if(pos==3)
-{
-  deep = res.clusters[i].points||[0];
-}
-else if(pos==2){
-  light = res.clusters[i].points||[0];
-}
-else if(pos==1)
-{
-  rem= res.clusters[i].points||[0];
-}
-else{
-  awake = res.clusters[i].points||[0];
-}
-}
+
+  awake = array[3];
+  rem = array[2];
+  light= array[1];
+ var n_deep_sleep = data_set.length - vectors.length;
+
 
 var n_rem = rem.length||0;
-var n_deep_sleep = deep.length||0;
 var n_light = light.length||0;
 
 var total = data_set.length;
@@ -827,16 +825,14 @@ function kmeans(dataset, k, useNaiveSharding = true) {
 //Clustering Algorithm end
 function calcsleepindex(data)
 {
+
 var sum = 0;
 for(var i =0;i<data.length;i++)
 {
   sum = sum + parseFloat(data[i]);
 }
 
-if(data.length==0)
-{
-  return 1;
-}
+
 return (parseFloat(sum/data.length));
 }
 var sumdataset = [];
