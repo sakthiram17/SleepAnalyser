@@ -114,11 +114,11 @@ function getData()
   get(child(dbref,url)).then(snapshot=>{
   var movements = snapshot.val();
  
+  sumdataset2 = sumdataset2 + movements;
   dispdata();
 
   hideload();
 
-  sumdataset2 = sumdataset2 + movements;
  });
  }
  else{
