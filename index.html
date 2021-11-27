@@ -16,8 +16,10 @@
 <body> 
 <nav class ="navbar">
 <ul>
+ 
   <li class = "brand"><i class = "fa fa-heartbeat"></i></li>
 <li class = "active"><a href = "index.html">APP</a></li>
+<li class = "toggle" id ="summary"><a href ="summary.html">Weekly</a></li>
 <li><a href = "project.html">Guide</a></li>
 </ul>
 </nav>
@@ -26,6 +28,20 @@
     <div class = "section" id ="secion1">
     <span class = "sectiont">Data Fetcher</span>
   <p id ="text">
+    <form>
+      <label for="day">Choose a Day</label>
+      <select name="day" id="day">
+        <option value="0">Monday</option>
+        <option value="1">Tuesday</option>
+        <option value="2">Wednessday</option>
+        <option value="3">Thursday</option>
+        <option value="4">Friday</option>
+        <option value="5">Saturday</option>
+        <option value="6">Sunday</option>
+      </select>
+      <br><br>
+
+    </form>
   <div id ="centerbutton">
 
   <button id = "button1" >Get Sleep Analysis</button>
@@ -46,9 +62,7 @@
     
   </p>
 
-  <div id = "centerclock">
-  <p id ="clock"></p>
-  </div>
+  
 
 </div></div>
 
@@ -131,9 +145,8 @@ var data_set = "";
 var datelist_str = [];
  function SelectData()
  {
-   var ele = document.getElementsByClassName('active1');
-  var element = ele[0];
-  var pos = arraylist.indexOf(element.innerHTML);
+  
+  var pos = document.getElementById('day').value;
   var url =`data${pos}`;
 
   const dbref = ref(db);
@@ -293,10 +306,6 @@ Plotly.newPlot('graph2', data2,layout);
 Plotly.newPlot('graph1', data,layout);
 Plotly.newPlot('bargraph',data4,layout1);
 
-setInterval(function() {
-  
-    setTime();
-}, 1000); 
 
 
 document.getElementById("prev").addEventListener("click", move_prev);
@@ -585,19 +594,7 @@ else if (deep_percent>=80){
 }
 
 }
-var list = document.getElementsByClassName('toggle');
-for(var i = 0;i<list.length;i++)
-{
-  list[i].addEventListener('click',function()
-  {
-    
-    var elist = document.getElementsByClassName('active1');
-    var e = elist[0];
-    e.classList.remove('active1');
-    this.classList.add('active1');
 
-  });
-}
 function displayload()
 {
  var loader  = document.getElementsByClassName('loader');
@@ -839,21 +836,8 @@ var sumdataset = [];
 var sumdataset2 = [];
 
 </script>
- <script src = "script.js"></script>
-<footer>
-  <nav class ="navbar">
-    <ul>
-    <li class = "active1 toggle">Mon</li>
-    <li class = "toggle">Tue</li>
-    <li class = "toggle">Wed</li>
-    <li class = "toggle">Th</li>
-    <li class = "toggle">Fri</li>
-    <li class = "toggle">Sat</li>
-    <li class = "toggle">Sun</li>
-    <li class = "toggle" id ="summary"><a href ="summary.html">Overall</a></li>
-    </ul>
-    </nav>
-</footer>
+
+
 </body>
 
 </html>
