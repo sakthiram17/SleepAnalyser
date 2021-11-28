@@ -110,7 +110,7 @@ footer .navbar li a:hover{
   margin: 20px;
   padding: 0px 0px 0px 00px;
  height:700px;
- border-radius: 20px;
+ border-radius: 15px;
  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
  font-size: 15px;
  
@@ -359,7 +359,7 @@ span{
 }
 .navbar li{
 display: none;
-width: 100%;
+
 }
 .navbar li a{
   color:whitesmoke;
@@ -385,6 +385,9 @@ width: 100%;
 #brand{
   display: none;
 }
+#close{
+text-align: center;
+}
 
 .active{
   background-color: black;
@@ -396,10 +399,17 @@ color:white;
   background-color: black;
   color:white;
 }
-
+.navbar li a:hover{
+  color:white;
+  }
+  .navbar li a:active{
+    background-color: black;
+    color:white;
+  }
 #bar{
-  position:relative;
-  right: -160px;
+  position:absolute;
+  top:-0.5%;
+  right:10%;
   color: whitesmoke;
   border:none;
   display: inline;

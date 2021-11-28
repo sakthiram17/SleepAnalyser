@@ -16,9 +16,9 @@
 <body> 
 <nav class ="navbar">
 <ul>
-
-  <li id = "brand"><i class = "fa fa-heartbeat"></i></li>
-<li class = "active tog"><a href = "index.html">APP</a></li>
+<li class = "pagehead">Home</li>
+<li id = "brand"><i class = "fa fa-heartbeat"></i></li>
+<li class = "active tog"><a href = "index.html">Home</a></li>
 <li id ="summary" class = "tog"><a href ="summary.html">Weekly</a></li>
 <li class = "tog"><a href = "project.html">Guide</a></li>
 <li class = "small" id = "bar"><i class="fas fa-bars" id = "barbtn"></i></li>
@@ -96,7 +96,8 @@
 <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> 
 
 <script type = "module">
-
+var pagehead = document.getElementsByClassName('pagehead');
+pagehead[0].style.display = "inline";
 var barbtn = document.getElementById('barbtn');
 barbtn.onclick = shownav;
 var barbtn1 = document.getElementById('close');
@@ -110,18 +111,27 @@ for(var i = 0;i<navlist.length;i++)
 }  
 console.log("showing nav")
 document.getElementById('bar').style.display = "none"
-  
+pagehead[0].style.display = "none";
 }
 function hidenav()
-{
+{ pagehead[0].style.display = "inline";
   var navlist = document.getElementsByClassName('tog');
 for(var i = 0;i<navlist.length;i++)
 {
   navlist[i].style.display = "none";
 }  document.getElementById('bar').style.display = "inline";
-
+console.log("hidenav")
 }
-
+document.addEventListener('click', function(event)
+{  var navlist = document.getElementsByClassName('tog');
+if(!(event.target.closest('.navbar')))
+{
+if(navlist[0].style.display!="none")
+{
+  hidenav();
+}
+}
+});
 
 
 var datelist = [];

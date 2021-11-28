@@ -16,11 +16,11 @@
 <body> 
   <nav class ="navbar">
     <ul>
-    
-      <li id = "brand"><i class = "fa fa-heartbeat"></i></li>
-    <li class = "active tog"><a href = "index.html">APP</a></li>
+    <li class = "pagehead">Weekly Report</li>
+    <li id = "brand"><i class = "fa fa-heartbeat"></i></li>
+    <li class = "tog"><a href = "index.html">Home</a></li>
     <li id ="summary" class = "tog"><a href ="summary.html">Weekly</a></li>
-    <li class = "tog"><a href = "project.html">Guide</a></li>
+    <li class = "active tog"><a href = "project.html">Guide</a></li>
     <li class = "small" id = "bar"><i class="fas fa-bars" id = "barbtn"></i></li>
     <li class = "tog far fa-window-close" id = "close"></li>
     </ul>
@@ -84,6 +84,9 @@ var colour = "black";
   appId: "1:22825152423:web:2b0c5dfa40a94a44d65082",
   measurementId: "G-DE1W2KHVN3"
 };
+
+var pagehead = document.getElementsByClassName('pagehead');
+pagehead[0].style.display = "inline";
 var barbtn = document.getElementById('barbtn');
 barbtn.onclick = shownav;
 var barbtn1 = document.getElementById('close');
@@ -97,17 +100,28 @@ for(var i = 0;i<navlist.length;i++)
 }  
 console.log("showing nav")
 document.getElementById('bar').style.display = "none"
-  
+pagehead[0].style.display = "none";
 }
 function hidenav()
-{
+{ pagehead[0].style.display = "inline";
   var navlist = document.getElementsByClassName('tog');
 for(var i = 0;i<navlist.length;i++)
 {
   navlist[i].style.display = "none";
 }  document.getElementById('bar').style.display = "inline";
-
+console.log("hidenav")
 }
+document.addEventListener('click', function(event)
+{  var navlist = document.getElementsByClassName('tog');
+if(!(event.target.closest('.navbar')))
+{
+if(navlist[0].style.display!="none")
+{
+  hidenav();
+}
+}
+});
+
 var awake = 0;
 var time = [];
 var datelist = [];
