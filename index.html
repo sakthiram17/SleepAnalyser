@@ -16,7 +16,7 @@
 <body> 
 <nav class ="navbar">
 <ul>
-<li class = "pagehead">Home</li>
+<span class = "pagehead">Home</span>
 <li id = "brand"><i class = "fa fa-heartbeat"></i></li>
 <li class = "active tog"><a href = "index.html">Home</a></li>
 <li id ="summary" class = "tog"><a href ="summary.html">Weekly</a></li>
@@ -96,8 +96,13 @@
 <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> 
 
 <script type = "module">
+
+var mat = window.matchMedia("(max-width:929px)");
+if(mat.matches)
+{
 var pagehead = document.getElementsByClassName('pagehead');
 pagehead[0].style.display = "inline";
+}
 var barbtn = document.getElementById('barbtn');
 barbtn.onclick = shownav;
 var barbtn1 = document.getElementById('close');
@@ -108,7 +113,9 @@ var navlist = document.getElementsByClassName('tog');
 for(var i = 0;i<navlist.length;i++)
 {
   navlist[i].style.display = "block";
-}  
+}
+var pagehead = document.getElementsByClassName('pagehead');
+pagehead[0].style.display = "inline";
 console.log("showing nav")
 document.getElementById('bar').style.display = "none"
 pagehead[0].style.display = "none";

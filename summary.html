@@ -16,11 +16,11 @@
 <body> 
   <nav class ="navbar">
     <ul>
-    <li class = "pagehead">Weekly Report</li>
+    <span class = "pagehead">Weekly Report</span>
     <li id = "brand"><i class = "fa fa-heartbeat"></i></li>
     <li class = "tog"><a href = "index.html">Home</a></li>
-    <li id ="summary" class = "tog"><a href ="summary.html">Weekly</a></li>
-    <li class = "active tog"><a href = "project.html">Guide</a></li>
+    <li id ="summary" class = "active tog"><a href ="summary.html">Weekly</a></li>
+    <li class = "tog"><a href = "project.html">Guide</a></li>
     <li class = "small" id = "bar"><i class="fas fa-bars" id = "barbtn"></i></li>
     <li class = "tog far fa-window-close" id = "close"></li>
     </ul>
@@ -85,8 +85,12 @@ var colour = "black";
   measurementId: "G-DE1W2KHVN3"
 };
 
+var mat = window.matchMedia("(max-width:929px)");
+if(mat.matches)
+{
 var pagehead = document.getElementsByClassName('pagehead');
 pagehead[0].style.display = "inline";
+}
 var barbtn = document.getElementById('barbtn');
 barbtn.onclick = shownav;
 var barbtn1 = document.getElementById('close');
@@ -98,6 +102,8 @@ for(var i = 0;i<navlist.length;i++)
 {
   navlist[i].style.display = "block";
 }  
+var pagehead = document.getElementsByClassName('pagehead');
+
 console.log("showing nav")
 document.getElementById('bar').style.display = "none"
 pagehead[0].style.display = "none";
@@ -121,7 +127,6 @@ if(navlist[0].style.display!="none")
 }
 }
 });
-
 var awake = 0;
 var time = [];
 var datelist = [];
