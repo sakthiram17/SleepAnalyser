@@ -16,11 +16,13 @@
 <body> 
 <nav class ="navbar">
 <ul>
- 
-  <li class = "brand"><i class = "fa fa-heartbeat"></i></li>
-<li class = "active"><a href = "index.html">APP</a></li>
-<li id ="summary"><a href ="summary.html">Weekly</a></li>
-<li><a href = "project.html">Guide</a></li>
+
+  <li id = "brand"><i class = "fa fa-heartbeat"></i></li>
+<li class = "active tog"><a href = "index.html">APP</a></li>
+<li id ="summary" class = "tog"><a href ="summary.html">Weekly</a></li>
+<li class = "tog"><a href = "project.html">Guide</a></li>
+<li class = "small" id = "bar"><i class="fas fa-bars" id = "barbtn"></i></li>
+<li class = "tog far fa-window-close" id = "close"></li>
 </ul>
 </nav>
 <div class="row">
@@ -72,8 +74,7 @@
   <p>
 
   <div id = "graph1"></div>
-     <button id = "prev" type = "button" class = " fa fa-arrow-circle-left"></button>
-   <button id = "next" type = "button"  class = " fa fa-arrow-circle-right"></button>
+    
   </p></div></div>
  
  <div class="col-lg-6 col-md-6 col-s-12">
@@ -95,6 +96,34 @@
 <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> 
 
 <script type = "module">
+
+var barbtn = document.getElementById('barbtn');
+barbtn.onclick = shownav;
+var barbtn1 = document.getElementById('close');
+barbtn1.onclick = hidenav;
+function shownav()
+{
+var navlist = document.getElementsByClassName('tog');
+for(var i = 0;i<navlist.length;i++)
+{
+  navlist[i].style.display = "block";
+}  
+console.log("showing nav")
+document.getElementById('bar').style.display = "none"
+  
+}
+function hidenav()
+{
+  var navlist = document.getElementsByClassName('tog');
+for(var i = 0;i<navlist.length;i++)
+{
+  navlist[i].style.display = "none";
+}  document.getElementById('bar').style.display = "inline";
+
+}
+
+
+
 var datelist = [];
 var start_time;
 var colour = "black";
@@ -183,8 +212,7 @@ console.log(data_set.length)
 
 }
  
-var next_click = 0;
-var prev_click = 0;
+
 document.getElementById("button1").addEventListener("click", SelectData);
 var data_set = [];
 function setTime()
@@ -308,128 +336,6 @@ Plotly.newPlot('bargraph',data4,layout1);
 
 
 
-document.getElementById("prev").addEventListener("click", move_prev);
-document.getElementById("next").addEventListener("click", move_next);
-function move_next()
-{ var data_set1 =data_set;
-  if(next_click>prev_click)
-  {
-    alert("You are at the end of Graph");
-  }
-  var data_set1 = data_set1.split("");
-  var time1 = time.slice(data_set1.length-100,data_set1.length-1);
-  next_click = next_click+1;
- 
- var new_data_set = data_set1.slice(data_set1.length-(prev_click-next_click)*100,data_set1.length-(prev_click-next_click-1)*100);
-
- if(colour == "white")
-{
-var layout = {
-  autosize: true,
-  width: size,
-  height: size,
-  margin: {
-    l: 5,
-    r: 5,
-    b: 10,
-    t: 10,
-    pad: 4
-  },
-  plot_bgcolor:bgcolor,
-  paper_bgcolor:bgcolor,
-  font: {
-    color: "white"
-  }
-  
-};}
-else{
-  var layout = {
-  autosize: true,
-  width: size,
-  height: size,
-  margin: {
-    l: 5,
-    r: 5,
-    b: 10,
-    t: 10,
-    pad: 4
-  },
-  plot_bgcolor:bgcolor,
-  paper_bgcolor:bgcolor,
-  font: {
-    color: "black"
-  }
-  
-};}
-
- var data_0 = [
-  {
-    x: time1,
-    y: new_data_set,
-    type: 'bar'
-  }
-];
-
-Plotly.newPlot('graph1', data_0),layout;
-}var data_set1 = data_set;
-function move_prev()
-{ var time1 = time.slice(data_set1.length-100,data_set1.length-1)
-  if((prev_click*99>data_set1.length))
-  {
-    alert("You are at the end of Graph");
-  }
-  prev_click = prev_click +1;
- var new_data_set = data_set.slice(data_set1.length-(prev_click-next_click)*100,data_set1.length-(prev_click-next_click-1)*100)
-var data_0 = [
-  {
-    x: time1,
-    y: new_data_set,
-    type: 'bar'
-  }
-];
-if(colour == "white")
-{
-var layout = {
-  autosize: true,
-  width: size,
-  height: size,
-  margin: {
-    l: 5,
-    r: 5,
-    b: 10,
-    t: 10,
-    pad: 4
-  },
-  plot_bgcolor:bgcolor,
-  paper_bgcolor:bgcolor,
-  font: {
-    color: "white"
-  }
-  
-};}
-else{
-  var layout = {
-  autosize: true,
-  width: size,
-  height: size,
-  margin: {
-    l: 5,
-    r: 5,
-    b: 10,
-    t: 10,
-    pad: 4
-  },
-  plot_bgcolor:bgcolor,
-  paper_bgcolor:bgcolor,
-  font: {
-    color: "black"
-  }
- 
-  
-};}
-
-Plotly.newPlot('graph1', data_0,layout);
-}
 
 function Plot_Graphs()
 {

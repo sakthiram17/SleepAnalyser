@@ -20,11 +20,13 @@
 <body> 
   <nav class ="navbar">
     <ul>
-     
-      <li class = "brand"><i class = "fa fa-heartbeat"></i></li>
-    <li><a href = "index.html">APP</a></li>
-    <li id ="summary"><a href ="summary.html">Weekly</a></li>
-    <li class = "active"><a href = "project.html">Guide</a></li>
+    
+      <li id = "brand"><i class = "fa fa-heartbeat"></i></li>
+    <li class = "active tog"><a href = "index.html">APP</a></li>
+    <li id ="summary" class = "tog"><a href ="summary.html">Weekly</a></li>
+    <li class = "tog"><a href = "project.html">Guide</a></li>
+    <li class = "small" id = "bar"><i class="fas fa-bars" id = "barbtn"></i></li>
+    <li class = "tog far fa-window-close" id = "close"></li>
     </ul>
     </nav>
 <div class="row">
@@ -36,7 +38,33 @@
 </div>
  </div>
  </div>
+<script>
 
+var barbtn = document.getElementById('barbtn');
+barbtn.onclick = shownav;
+var barbtn1 = document.getElementById('close');
+barbtn1.onclick = hidenav;
+function shownav()
+{
+var navlist = document.getElementsByClassName('tog');
+for(var i = 0;i<navlist.length;i++)
+{
+  navlist[i].style.display = "block";
+}  
+console.log("showing nav")
+document.getElementById('bar').style.display = "none"
+  
+}
+function hidenav()
+{
+  var navlist = document.getElementsByClassName('tog');
+for(var i = 0;i<navlist.length;i++)
+{
+  navlist[i].style.display = "none";
+}  document.getElementById('bar').style.display = "inline";
+
+}
+</script>
 
 </body>
 

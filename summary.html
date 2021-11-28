@@ -16,11 +16,13 @@
 <body> 
   <nav class ="navbar">
     <ul>
-     
-      <li class = "brand"><i class = "fa fa-heartbeat"></i></li>
-    <li class><a href = "index.html">APP</a></li>
-    <li class = "active" id ="summary"><a href ="summary.html">Weekly</a></li>
-    <li ><a href = "project.html">Guide</a></li>
+    
+      <li id = "brand"><i class = "fa fa-heartbeat"></i></li>
+    <li class = "active tog"><a href = "index.html">APP</a></li>
+    <li id ="summary" class = "tog"><a href ="summary.html">Weekly</a></li>
+    <li class = "tog"><a href = "project.html">Guide</a></li>
+    <li class = "small" id = "bar"><i class="fas fa-bars" id = "barbtn"></i></li>
+    <li class = "tog far fa-window-close" id = "close"></li>
     </ul>
     </nav>
 <div class="row">
@@ -82,6 +84,30 @@ var colour = "black";
   appId: "1:22825152423:web:2b0c5dfa40a94a44d65082",
   measurementId: "G-DE1W2KHVN3"
 };
+var barbtn = document.getElementById('barbtn');
+barbtn.onclick = shownav;
+var barbtn1 = document.getElementById('close');
+barbtn1.onclick = hidenav;
+function shownav()
+{
+var navlist = document.getElementsByClassName('tog');
+for(var i = 0;i<navlist.length;i++)
+{
+  navlist[i].style.display = "block";
+}  
+console.log("showing nav")
+document.getElementById('bar').style.display = "none"
+  
+}
+function hidenav()
+{
+  var navlist = document.getElementsByClassName('tog');
+for(var i = 0;i<navlist.length;i++)
+{
+  navlist[i].style.display = "none";
+}  document.getElementById('bar').style.display = "inline";
+
+}
 var awake = 0;
 var time = [];
 var datelist = [];
@@ -459,14 +485,6 @@ loader.style.visibility= "hidden";
 }
 
 </script>
-<footer>
-    <nav class ="navbar">
-      <ul>
-     
-      <li id = "goback"><a href = "index.html">Go Back</a></li>  
-    </ul>
-      </nav>
-  </footer>
 
 </body>
 
