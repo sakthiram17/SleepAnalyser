@@ -9,52 +9,65 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Arvo:ital@1&display=swap" rel="stylesheet">
-<link rel = "stylesheet" href = "styles.css">
+<link rel="stylesheet" href = "styles.css">
     <title>Sleep Analyser</title>
    
   </head>
 <body> 
-  <nav class ="navbar">
-    <ul>
-    <span class = "pagehead">Weekly Report</span>
-    
-    <li class = "tog"><a href = "index.html">Home</a></li>
-    <li id ="summary" class = "active tog"><a href ="summary.html">Weekly</a></li>
-    <li class = "tog"><a href = "project.html">Guide</a></li>
-    <li class = "small" id = "bar"><i class="fas fa-bars" id = "barbtn"></i></li>
-    <li class = "tog far fa-window-close" id = "close"></li>
-    </ul>
-    </nav>
-    <div class="row">
-      <div class="col-lg-6 col-md-6 col-s-12">
-        <div class = "section" id ="secion1">
-        <span class = "sectiont">Data Fetcher</span>
-      <p id ="text">
-        
-      <div id ="centerbutton">
-    
-      <button id = "button1" >Get Sleep Analysis</button>
-    </div>
-    <div id = "fill">
-      <ul>
-      <li>Total Hours of Sleep <span class ="span2" id ="sleep"></span></li>
-      <li>Total Hours of Recording <span class ="span2" id ="record"></span></li>
-      
-      <li>Total Hours of DEEP Sleep <span class ="span2" id = "dsleep"></span></li>
-      <li>Total Hours of REM Sleep <span class ="span2" id = "rsleep"></span></li>
-      <li>Total Hours of LIGHT Sleep <span class ="span2" id = "lsleep"></span></li>
-      <li>Total Hours of Awakeness <span class ="span2" id = "asleep"></span></li>
-     
-      <li>Sleep index<span id ="index" class ="span2"></span></li>
-    </ul></div>
-    </div>
-        
-      </p>
-    
-      
-    
-    </div></div>
+<nav class ="navbar">
+<ul>
+<span class = "pagehead">Home</span>
+<li class = "active tog"><a href = "index.html">Home</a></li>
+<li id ="summary" class = "tog"><a href ="summary.html">Weekly</a></li>
+<li class = "tog"><a href = "project.html">Guide</a></li>
+<li class = "small" id = "bar"><i class="fas fa-bars" id = "barbtn"></i></li>
+<li class = "tog far fa-window-close" id = "close"></li>
+</ul>
+</nav>
+<div class="row">
   <div class="col-lg-6 col-md-6 col-s-12">
+    <div class = "section" id ="secion1">
+    <span class = "sectiont">Data Fetcher</span>
+  <p id ="text">
+    <form>
+      <label for="day">Choose a Day</label>
+      <select name="day" id="day">
+        <option value="0">Monday</option>
+        <option value="1">Tuesday</option>
+        <option value="2">Wednessday</option>
+        <option value="3">Thursday</option>
+        <option value="4">Friday</option>
+        <option value="5">Saturday</option>
+        <option value="6">Sunday</option>
+      </select>
+      <br><br>
+
+    </form>
+  <div id ="centerbutton">
+
+  <button id = "button1" >Get Sleep Analysis</button>
+</div>
+<div id = "fill">
+  <ul>
+  <li>Total Hours of Sleep <span class ="span2" id ="sleep"></span></li>
+  <li>Total Hours of Recording <span class ="span2" id ="record"></span></li>
+  
+  <li>Total Hours of DEEP Sleep <span class ="span2" id = "dsleep"></span></li>
+  <li>Total Hours of REM Sleep <span class ="span2" id = "rsleep"></span></li>
+  <li>Total Hours of LIGHT Sleep <span class ="span2" id = "lsleep"></span></li>
+  <li>Total Hours of Awakeness <span class ="span2" id = "asleep"></span></li>
+ 
+  <li>Sleep index<span id ="index" class ="span2"></span></li>
+</ul></div>
+</div>
+    
+  </p>
+
+  
+
+</div></div>
+
+ <div class="col-lg-6 col-md-6 col-s-12">
     <div class = "section">
     <span class = "sectiont">Movements detected</span>
   <p>
@@ -77,152 +90,11 @@
   </p></div></div>
 
 </div>
- 
-</div>
 
- 
- 
 <div class="loader"></div>
-
 <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> 
+<script src = "dbs.js"></script>
 <script type = "module">
-var datelist = [];
-var start_time;
-var colour = "black";
-
-
-
-// Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-analytics.js";
-  import{getDatabase, ref, set, child, update, remove,get}
- from  "https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-  apiKey: "AIzaSyBgIWydOijimi0Hio9DLn692f-K1Ri_jlY",
-  authDomain: "sleepanalyzer2-b9951.firebaseapp.com",
-  databaseURL: "https://sleepanalyzer2-b9951-default-rtdb.firebaseio.com",
-  projectId: "sleepanalyzer2-b9951",
-  storageBucket: "sleepanalyzer2-b9951.appspot.com",
-  messagingSenderId: "22825152423",
-  appId: "1:22825152423:web:2b0c5dfa40a94a44d65082",
-  measurementId: "G-DE1W2KHVN3"
-};
-
-var size =500;
-var mat = window.matchMedia("(max-width:500px)");
-if(mat.matches)
-{
-size = 320;
-}
-function setTime()
-{
-var d = new Date();
-var Hour = d.getHours();
-var minute = d.getMinutes();
-var second = d.getSeconds();
-document.getElementById("clock").textContent =String(Hour)+':'+String(minute)+':'+String(second);}
-var x = [];
-var time = [];
-for (var i = 0; i < 500; i ++) {
-  x[i] = Math.random();
-}
-var trace = {
-    x: x,
-    type: 'histogram',
-  };
-var data = [trace];
-var data2 = [{
-  values: [19, 26, 55],
-  labels: ['REM Sleep', 'Deep Sleep', 'Light Sleep','Awake'],
-  type: 'pie'
-}];
-
-  var layout = {
-  autosize: true,
-  width: size,
-  height: size,
-  margin: {
-    l: 5,
-    r: 5,
-    b: 10,
-    t: 10,
-    pad: 4
-  },
-  plot_bgcolor:"white",
-  paper_bgcolor:"white",
-  font: {
-    color: "black"
-  }
-  
-};
-
-
-var layout1 = {
-  autosize:true,
-  plot_bgcolor:"white",
-  paper_bgcolor:"white",
-      textfont: {
-    color: colour
-  },
-  font:{
-    color:"black"
-  }
- 
-  
-};
-
-
-
-
-
-
-var data4 = [
-  {
-    x: ['REM SLeep (in hours)', 'Deep Sleep (in hours)', 'Light Sleep(in hours)','Awake (in hours)'],
-    y: [3, 4, 1,2],
-    type: 'bar',
-     marker: {
-    line: {
-      width: 2
-    }
-  }
-    
-  }
-];
-
-var time_iter = 0;
-var time = [];
-Plotly.newPlot('graph2', data2,layout);
-Plotly.newPlot('graph1', data,layout);
-Plotly.newPlot('bargraph',data4,layout1);
-
-function bblSort(arr){
-     
-     for(var i = 0; i < arr.length; i++){
-         
-       // Last i elements are already in place  
-       for(var j = 0; j < ( arr.length - i -1 ); j++){
-           
-         // Checking if the item at present iteration 
-         // is greater than the next iteration
-         if(calcsleepindex(arr[j]) > calcsleepindex(arr[j])){
-             
-           // If the condition is true then swap them
-           var temp = arr[j]
-           arr[j] = arr[j + 1]
-           arr[j+1] = temp
-         }
-       }
-     }
-     // Print the sorted array
-  return arr;
-    }
-
 var mat = window.matchMedia("(max-width:929px)");
 if(mat.matches)
 {
@@ -254,6 +126,7 @@ for(var i = 0;i<navlist.length;i++)
 {
   navlist[i].style.display = "none";
 }  document.getElementById('bar').style.display = "inline";
+
 }
 document.addEventListener('click', function(event)
 {  var navlist = document.getElementsByClassName('tog');
@@ -266,7 +139,43 @@ if(navlist[0].style.display!="none")
 }
 });
 
-var awake = 0;
+
+var datelist = [];
+var start_time;
+var colour = "black";
+var sectionlist = document.getElementsByClassName('section');
+var sectionele = sectionlist[0];
+var bgcolor = window.getComputedStyle(sectionele, null).getPropertyValue("background-color");
+if(bgcolor== 'rgb(94, 14, 66)'){
+  colour = "white";
+} 
+var size =500;
+var mat = window.matchMedia("(max-width:500px)");
+if(mat.matches)
+{
+size = 320;
+}
+// Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-analytics.js";
+  import{getDatabase, ref, set, child, update, remove,get}
+ from  "https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+  apiKey: "AIzaSyBgIWydOijimi0Hio9DLn692f-K1Ri_jlY",
+  authDomain: "sleepanalyzer2-b9951.firebaseapp.com",
+  databaseURL: "https://sleepanalyzer2-b9951-default-rtdb.firebaseio.com",
+  projectId: "sleepanalyzer2-b9951",
+  storageBucket: "sleepanalyzer2-b9951.appspot.com",
+  messagingSenderId: "22825152423",
+  appId: "1:22825152423:web:2b0c5dfa40a94a44d65082",
+  measurementId: "G-DE1W2KHVN3"
+};
+
 var time = [];
 var datelist = [];
   const app = initializeApp(firebaseConfig);
@@ -275,193 +184,77 @@ var datelist = [];
 var arraylist = ["Mon","Tue","Wed","Th","Fri","Sat","Sun"];
 
 
-const dbref = ref(db);
-var array = [];
-var sumbtn = document.getElementById('button1');
-sumbtn.onclick = getData;
-var sumdataset =[];
-var sumdataset2 = "";
-var time3 = [];
-var sumdataset3 = [];
-var res = [];
-var total = 0;
-var rem = 0;
-var awake = 0;
-var n_deep = 0;
-var light = 0;
-var deep =0;
-var n_rem = 0;
-var n_awake = 0;
-var n_deep = 0;
-var n_light = 0;
-function getData()
-{  
-  sumdataset2 = "";
-  time3 = "";
-  sumdataset3 = [];
-  
- for (var i = 0;i<7;i++)
+
+
+var data_set = "";
+var datelist_str = [];
+ function SelectData()
  {
-  var url =`data${i}`;
+  
+  var pos = document.getElementById('day').value;
+  var url =`data${pos}`;
+
   const dbref = ref(db);
-
   displayload();
- if(i==6)
- {
-  get(child(dbref,url)).then(snapshot=>{
+ get(child(dbref,url)).then(snapshot=>{
   var movements = snapshot.val();
-  sumdataset2 = sumdataset2 + movements;
-  hideload();
-  let vectors1 = new Array();
-var time3 = [];
-for(var i =0;i<movements.length;i++)
-{
-  time3.push(i);
-}
-for (let i = 0 ; i < movements.length ; i++) {
 
-  if(movements[i]==1)
-  {
-   vectors1.push([10, time3[i]])
-  }else{
-    vectors1.push([-10, time3[i]])
-  }
-}
-array = [];
+ data_set = movements;
 
- var res = kmeans(vectors1,4);
+var t = [];
 
-
- array = [res.clusters[0].points,res.clusters[1].points,res.clusters[2].points, res.clusters[3].points]
- array = bblSort(array);
- console.log(array)
- 
- vectors1 = [];
+ for(var i =0;i<data_set.length;i++)
+ { 
   
- awake = array[3];
- rem = array[2];
- light =array[1];
- 
- awake = awake.length||0;
- rem = rem.length||0;
- light = light.length||0;
- deep = total - awake;
 
- n_rem = n_rem + rem;
- n_deep =n_deep + deep;
- n_light = n_light + light;
- n_awake = awake + n_awake;
- var x = n_rem;
- var y = n_light;
- var z = n_awake;
- var q = n_deep;
- console.log(x,y,z,q)
- dispdata(x,y,z,q);
-hideload();
- });
+  t.push(i);
+
+
  }
- else{
-  get(child(dbref,url)).then(snapshot=>{
-  var movements = snapshot.val();
-  sumdataset2 = sumdataset2 + movements;
-  total = movements.length;
-  let vectors1 = new Array();
-var time3 = [];
-for(var i =0;i<movements.length;i++)
-{
-  time3.push(i);
-}
-for (let i = 0 ; i < movements.length ; i++) {
+ time = t;
+datelist_str  = [];
 
-  if(movements[i]==1)
-  {
-   vectors1.push([10, time3[i]])
-  }
-  else{
-    vectors1.push([-10, time3[i]])
-  }
-}
-array = [];
- res = kmeans(vectors1,4);
- vectors1 = [];
- array = [res.clusters[0].points,res.clusters[1].points,res.clusters[2].points, res.clusters[3].points]
-  array = bblSort(array);
-  awake = array[3];
- rem = array[2];
- light =array[1];
-
+ Plot_Graphs();
+ hideload(); 
  
- awake = awake.length||0;
- rem = rem.length||0;
- light = light.length||0;
- deep = total - awake;
 
- n_rem = n_rem + rem;
- n_deep =n_deep + deep;
- n_light = n_light + light;
-
- n_awake = awake + n_awake;
  });
 
- }
+ //get(child(dbref,"starttime")).then(snapshot=>{
+  //start_time = snapshot.val();
 
- }
-function dispdata(n_rem,n_light,n_awake,n_deep){
-
- console.log(n_rem)
-  var total = sumdataset2.length;
-
-  var avgsleep = total/(3600*7);
- var space = document.getElementById('fill');
- var total_hours = sumdataset2.length/3600;
-var sumdataset3 = sumdataset2.split("");
-var total_sleep = 0;
-total_sleep = (total- n_awake)/3600;
-var total_awake = n_awake/3600;
-var avgsleepperday = total_sleep/7;
-
-
-var time3 = [];
-for(var i = 0;i<sumdataset2.length;i++)
-{time3.push(i);
-}
-  var n_awake = n_awake/3600;
-  var n_rem = n_rem/3600;
-  var n_light= n_light/3600;
+ //});
  
 
- var n_deep_sleep = n_deep/3600;
- var rem_percent = (n_rem/total)*100;
-var deep_percent = (n_deep_sleep/total)*100;
-var light_percent = (n_light/total)*100;
-var none_percent = (n_awake/total)*100;
-var ml = 0;
-for(var i = 0;i<sumdataset3.length;i++)
-{
-    if(sumdataset3[i] =='1'){
-        ml = ml +1;
-    }
-
 }
-var data_0 = [
-  {
-    x: time3,
-    y: sumdataset3,
-    type: 'bar'
-  }
-];
-var data_2 = [{
-  values: [rem_percent, deep_percent, light_percent,none_percent],
+ 
+
+document.getElementById("button1").addEventListener("click", SelectData);
+var data_set = [];
+function setTime()
+{
+var d = new Date();
+var Hour = d.getHours();
+var minute = d.getMinutes();
+var second = d.getSeconds();
+document.getElementById("clock").textContent =String(Hour)+':'+String(minute)+':'+String(second);}
+var x = [];
+var time = [];
+for (var i = 0; i < 500; i ++) {
+  x[i] = Math.random();
+}
+var trace = {
+    x: x,
+    type: 'histogram',
+  };
+var data = [trace];
+var data2 = [{
+  values: [19, 26, 55],
   labels: ['REM Sleep', 'Deep Sleep', 'Light Sleep','Awake'],
   type: 'pie'
 }];
-var data4 = [
-  {
-    x: ['REM SLeep (in hours)', 'Deep Sleep (in hours)', 'Light Sleep(in hours)','Awake (in hours)'],
-    y: [rem_percent,deep_percent, light_percent,none_percent],
-    type: 'bar'
-  }
-];
+if(colour == "white")
+{
 var layout = {
   autosize: true,
   width: size,
@@ -473,50 +266,276 @@ var layout = {
     t: 10,
     pad: 4
   },
-  plot_bgcolor:"white",
-  paper_bgcolor:"white",
+  plot_bgcolor:bgcolor,
+  paper_bgcolor:bgcolor,
+  font: {
+    color: "white"
+  }
+  
+};}
+else{
+  var layout = {
+  autosize: true,
+  width: size,
+  height: size,
+  margin: {
+    l: 5,
+    r: 5,
+    b: 10,
+    t: 10,
+    pad: 4
+  },
+  plot_bgcolor:bgcolor,
+  paper_bgcolor:bgcolor,
   font: {
     color: "black"
   }
   
-};
-var layout2 = {
+};}
+
+if(colour == "white")
+{
+var layout1 = {
   autosize:true,
-  plot_bgcolor:"white",
-  paper_bgcolor:"white",
+  plot_bgcolor:bgcolor,
+  paper_bgcolor:bgcolor,
+      textfont: {
+    color: colour
+  },
+  font:{
+    color:"white"
+  }
+ 
+  
+};}
+else{
+
+  var layout1 = {
+  autosize:true,
+  plot_bgcolor:bgcolor,
+  paper_bgcolor:bgcolor,
       textfont: {
     color: colour
   },
   font:{
     color:"black"
   }
+ 
+  
+};
 }
+
+
+
+
+
+
+var data4 = [
+  {
+    x: ['REM SLeep (in hours)', 'Deep Sleep (in hours)', 'Light Sleep(in hours)','Awake (in hours)'],
+    y: [3, 4, 1,2],
+    type: 'bar',
+     marker: {
+    line: {
+      width: 2
+    }
+  }
+    
+  }
+];
+
+var time_iter = 0;
+var time = [];
+Plotly.newPlot('graph2', data2,layout);
+Plotly.newPlot('graph1', data,layout);
+Plotly.newPlot('bargraph',data4,layout1);
+
+
+
+
+function Plot_Graphs()
+{
+ if(typeof(data_set)=="string")
+  data_set = data_set.split("");
+
+var rem = 0;
+var awake = 0;
+var light = 0;
+var deep = 0;
+var data_set1 = data_set;
+var plot_data_set = data_set;
+
+
+  var data_0 = [
+  {
+    x: time,
+    y: data_set1,
+    type: 'bar'
+  }
+];
+
+var newdata_set = [];
+var newtime = [];
+function sumof(arr)
+{ var sum = 0;
+  for(var i =0;i<arr.length;i++)
+  {
+    sum = sum + arr[i];
+  }
+  return sum
+}
+
+let vectors = new Array();
+for (let i = 0 ; i < data_set.length ; i++) {
+  if(data_set[i]=='1')
+  vectors.push([100000,time[i]])
+ else{
+  vectors.push([-100000,time[i]])
+ }
+}
+var dbscanner = jDBSCAN()
+	.eps(0.75)
+	.minPts(1)
+	.distance('EUCLIDEAN')
+	.data(vectors);
+var res2 = dbscanner();
+console.log(res2);
+var res = kmeans(vectors,4,true);
+
+var sleepindex = [];
+var array = [res.clusters[0].points,res.clusters[1].points,res.clusters[2].points,res.clusters[3].points]
+
+function bblSort(arr){
+     
+     for(var i = 0; i < arr.length; i++){
+         
+       // Last i elements are already in place  
+       for(var j = 0; j < ( arr.length - i -1 ); j++){
+           
+         // Checking if the item at present iteration 
+         // is greater than the next iteration
+         if(calcsleepindex(arr[j][1]) > calcsleepindex(arr[j][1])){
+             
+           // If the condition is true then swap them
+           var temp = arr[j]
+           arr[j] = arr[j + 1]
+           arr[j+1] = temp
+         }
+       }
+     }
+     // Print the sorted array
+  return arr;
+    }
+ 
+var array = bblSort(array);
+   
+  var awake = array[3].length||0;
+  var rem = array[2].length||0;
+  var light= array[1].length||0;
+  var n_deep_sleep = array[0].length||0;
+
+var total = data_set.length;
+var n_rem = rem||0;
+var n_light = light||0;
+
+var total = data_set.length;
+var rem_percent = (n_rem/total)*100;
+var deep_percent = (n_deep_sleep/total)*100;
+var light_percent = (n_light/total)*100;
+var none_percent =  100 - rem_percent - deep_percent - light_percent;
+
+var am = none_percent * total/100;
+document.getElementById('sleep').innerHTML = ((n_rem+light+n_deep_sleep)/3600).toFixed(2);
+document.getElementById('record').innerHTML = (total/3600).toFixed(2);
+document.getElementById('lsleep').innerHTML = (light/3600).toFixed(2);
+document.getElementById('rsleep').innerHTML = (n_rem/3600).toFixed(2);
+document.getElementById('dsleep').innerHTML = (n_deep_sleep/3600).toFixed(2);
+document.getElementById('asleep').innerHTML = (awake/3600).toFixed(2);
+document.getElementById('index').innerHTML = ((total/(total+am))).toFixed(2);
+var data_2 = [{
+  values: [rem_percent, deep_percent, light_percent,none_percent],
+  labels: ['REM Sleep', 'Deep Sleep', 'Light Sleep','Awake'],
+  type: 'pie'
+}];
+var data4 = [
+  {
+    x: ['REM SLeep (in hours)', 'Deep Sleep (in hours)', 'Light Sleep(in hours)','Awake (in hours)'],
+    y: [n_rem/3600,n_deep_sleep/3600, light/3600,awake/3600],
+    type: 'bar'
+  }
+];
+
+var layout2 = {
+  autosize:true,
+  plot_bgcolor:bgcolor,
+  paper_bgcolor:bgcolor,
+ 
+  font:{
+    color:"black"
+  }
+}
+var data4 = [
+  {
+    x: ['REM SLeep (in hours)', 'Deep Sleep (in hours)', 'Light Sleep(in hours)','Awake (in hours)'],
+    y: [n_rem/3600,n_deep_sleep/3600, light/3600,awake/3600],
+    type: 'bar',
+     marker: {
+    line: {
+      width: 2
+    }
+  }
+    
+  }
+];
+
+
+
+
+
+  var data_0 = [
+  {
+    x: time,
+    y: data_set1,
+    type: 'bar'
+  }
+];
+
+
+
 Plotly.newPlot('graph1', data_0);
 Plotly.newPlot('graph2', data_2,layout);
 Plotly.newPlot('bargraph', data4,layout2);
+deep_percent = deep_percent.toFixed(0);
 
 
+if(deep_percent<80)
+{
+document.getElementById("text").textContent = "Your deep sleep percentage is "+deep_percent+"% .We Recommond you to use Sleep Inducer in mode I";
+}
+else if(deep_percent<50)
+{
+document.getElementById("text").textContent = "Your deep sleep percentage is "+deep_percent+"% .We Recommond you to use Sleep Inducer in mode II";
+}
+else if (deep_percent>=80){
+  document.getElementById("text").textContent = "Your deep sleep percentage is "+deep_percent+"% .You Sleep is good no need to use the device";
+}
 
+}
 
-
-
-
-
-document.getElementById('sleep').innerHTML = total_sleep.toFixed(2);
-document.getElementById('record').innerHTML = total_hours.toFixed(2);
-document.getElementById('lsleep').innerHTML = n_light.toFixed(2);
-document.getElementById('rsleep').innerHTML = n_rem.toFixed(2);
-document.getElementById('dsleep').innerHTML = n_deep_sleep.toFixed(2);
-document.getElementById('asleep').innerHTML = (n_awake).toFixed(2);
-document.getElementById('avgsleep').innerHTML = avgsleep.toFixed(2);
-document.getElementById('sleepindex').innerHTML = ((sumdataset3.length)/(ml+sumdataset3.length)).toFixed(2);
-sumdataset =[];
-   sumdataset2 = "";
-   time3 = [];
-sumdataset3 = [];
-n_rem,n_awake,n_light,n_deep = 0;
-}}
-
+function displayload()
+{
+ var loader  = document.getElementsByClassName('loader');
+ loader = loader[0];
+loader.style.display = "block";
+}
+function hideload()
+{
+  var loader  = document.getElementsByClassName('loader');
+ loader = loader[0];
+ loader.style.removeProperty('display');
+loader.style.display = "none";
+loader.style.visibility= "hidden";
+}
 
 
 //Clustering Algorithm start
@@ -564,9 +583,20 @@ function getRandomCentroidsNaiveSharding(dataset, k) {
 
 function getRandomCentroids(dataset, k) {
   // selects random points as centroids from the dataset
-
-  const centroids = ['0','0','0','0'];
-  
+  const numSamples = dataset.length;
+  const centroidsIndex = [];
+  let index;
+  while (centroidsIndex.length < k) {
+    index = randomBetween(0, numSamples);
+    if (centroidsIndex.indexOf(index) === -1) {
+      centroidsIndex.push(index);
+    }
+  }
+  const centroids = [];
+  for (let i = 0; i < centroidsIndex.length; i++) {
+    const centroid = [...dataset[centroidsIndex[i]]];
+    centroids.push(centroid);
+  }
   return centroids;
 }
 
@@ -719,35 +749,25 @@ function kmeans(dataset, k, useNaiveSharding = true) {
 //Clustering Algorithm end
 function calcsleepindex(data)
 {
+
 var sum = 0;
 for(var i =0;i<data.length;i++)
 {
   sum = sum + parseFloat(data[i]);
+
 }
-if(data.length==0)
+if(!data.length)
 {
-  return 1;
+return 1;
 }
 return (parseFloat(sum/data.length));
 }
-function displayload()
-{
- var loader  = document.getElementsByClassName('loader');
- loader = loader[0];
-loader.style.display = "block";
-}
-function hideload()
-{
-  var loader  = document.getElementsByClassName('loader');
- loader = loader[0];
-
- loader.style.removeProperty('display');
-loader.style.display = "none";
-loader.style.visibility= "hidden";
-}
+var sumdataset = [];
+var sumdataset2 = [];
 
 
 </script>
+
 
 </body>
 
