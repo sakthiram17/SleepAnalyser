@@ -17,7 +17,6 @@
 <nav class ="navbar">
 <ul>
 <span class = "pagehead">Home</span>
-<li id = "brand"><i class = "fa fa-heartbeat"></i></li>
 <li class = "active tog"><a href = "index.html">Home</a></li>
 <li id ="summary" class = "tog"><a href ="summary.html">Weekly</a></li>
 <li class = "tog"><a href = "project.html">Guide</a></li>
@@ -59,7 +58,7 @@
   <li>Total Hours of Awakeness <span class ="span2" id = "asleep"></span></li>
  
   <li>Sleep index<span id ="index" class ="span2"></span></li>
-</ul>
+</ul></div>
 </div>
     
   </p>
@@ -94,9 +93,8 @@
 
 <div class="loader"></div>
 <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> 
-
+<script src = "dbs.js"></script>
 <script type = "module">
-
 var mat = window.matchMedia("(max-width:929px)");
 if(mat.matches)
 {
@@ -116,18 +114,19 @@ for(var i = 0;i<navlist.length;i++)
 }
 var pagehead = document.getElementsByClassName('pagehead');
 pagehead[0].style.display = "inline";
-console.log("showing nav")
+
 document.getElementById('bar').style.display = "none"
 pagehead[0].style.display = "none";
 }
 function hidenav()
 { pagehead[0].style.display = "inline";
+pagehead[0].style.color = "white";
   var navlist = document.getElementsByClassName('tog');
 for(var i = 0;i<navlist.length;i++)
 {
   navlist[i].style.display = "none";
 }  document.getElementById('bar').style.display = "inline";
-console.log("hidenav")
+
 }
 document.addEventListener('click', function(event)
 {  var navlist = document.getElementsByClassName('tog');
@@ -214,7 +213,7 @@ var t = [];
  }
  time = t;
 datelist_str  = [];
-console.log(data_set.length)
+
  Plot_Graphs();
  hideload(); 
  
@@ -389,14 +388,23 @@ function sumof(arr)
 let vectors = new Array();
 for (let i = 0 ; i < data_set.length ; i++) {
   if(data_set[i]=='1')
-  vectors.push([10,time[i]])
-
+  vectors.push([100000,time[i]])
+ else{
+  vectors.push([-100000,time[i]])
+ }
 }
-
+var dbscanner = jDBSCAN()
+	.eps(0.75)
+	.minPts(1)
+	.distance('EUCLIDEAN')
+	.data(vectors);
+var res2 = dbscanner();
+console.log(res2);
 var res = kmeans(vectors,4,true);
-console.log(res)
+
 var sleepindex = [];
 var array = [res.clusters[0].points,res.clusters[1].points,res.clusters[2].points,res.clusters[3].points]
+
 function bblSort(arr){
      
      for(var i = 0; i < arr.length; i++){
@@ -406,7 +414,7 @@ function bblSort(arr){
            
          // Checking if the item at present iteration 
          // is greater than the next iteration
-         if(calcsleepindex(arr[j]) > calcsleepindex(arr[j])){
+         if(calcsleepindex(arr[j][1]) > calcsleepindex(arr[j][1])){
              
            // If the condition is true then swap them
            var temp = arr[j]
@@ -418,18 +426,17 @@ function bblSort(arr){
      // Print the sorted array
   return arr;
     }
+ 
 var array = bblSort(array);
-      
+   
+  var awake = array[3].length||0;
+  var rem = array[2].length||0;
+  var light= array[1].length||0;
+  var n_deep_sleep = array[0].length||0;
 
-
-  awake = array[3];
-  rem = array[2];
-  light= array[1];
- var n_deep_sleep = data_set.length - vectors.length;
-
-
-var n_rem = rem.length||0;
-var n_light = light.length||0;
+var total = data_set.length;
+var n_rem = rem||0;
+var n_light = light||0;
 
 var total = data_set.length;
 var rem_percent = (n_rem/total)*100;
@@ -438,12 +445,12 @@ var light_percent = (n_light/total)*100;
 var none_percent =  100 - rem_percent - deep_percent - light_percent;
 
 var am = none_percent * total/100;
-document.getElementById('sleep').innerHTML = ((n_rem+n_light+n_deep_sleep)/3600).toFixed(2);
+document.getElementById('sleep').innerHTML = ((n_rem+light+n_deep_sleep)/3600).toFixed(2);
 document.getElementById('record').innerHTML = (total/3600).toFixed(2);
-document.getElementById('lsleep').innerHTML = (n_light/3600).toFixed(2);
+document.getElementById('lsleep').innerHTML = (light/3600).toFixed(2);
 document.getElementById('rsleep').innerHTML = (n_rem/3600).toFixed(2);
 document.getElementById('dsleep').innerHTML = (n_deep_sleep/3600).toFixed(2);
-document.getElementById('asleep').innerHTML = (none_percent*(total)/360000).toFixed(2);
+document.getElementById('asleep').innerHTML = (awake/3600).toFixed(2);
 document.getElementById('index').innerHTML = ((total/(total+am))).toFixed(2);
 var data_2 = [{
   values: [rem_percent, deep_percent, light_percent,none_percent],
@@ -453,37 +460,35 @@ var data_2 = [{
 var data4 = [
   {
     x: ['REM SLeep (in hours)', 'Deep Sleep (in hours)', 'Light Sleep(in hours)','Awake (in hours)'],
-    y: [rem_percent*total/360000,deep_percent*total/360000, light_percent*total/360000,none_percent*total/360000],
+    y: [n_rem/3600,n_deep_sleep/3600, light/3600,awake/3600],
     type: 'bar'
   }
 ];
-if(colour == "white")
+
 var layout2 = {
   autosize:true,
   plot_bgcolor:bgcolor,
   paper_bgcolor:bgcolor,
-      textfont: {
-    color: colour
-  },
-  font:{
-    color:"white"
-  }
-
-}
-else{
-  var layout2 = {
-  autosize:true,
-  plot_bgcolor:bgcolor,
-  paper_bgcolor:bgcolor,
-      textfont: {
-    color: colour
-  },
+ 
   font:{
     color:"black"
   }
+}
+var data4 = [
+  {
+    x: ['REM SLeep (in hours)', 'Deep Sleep (in hours)', 'Light Sleep(in hours)','Awake (in hours)'],
+    y: [n_rem/3600,n_deep_sleep/3600, light/3600,awake/3600],
+    type: 'bar',
+     marker: {
+    line: {
+      width: 2
+    }
+  }
+    
+  }
+];
 
-}
-}
+
 
 
 
@@ -496,7 +501,6 @@ else{
 ];
 
 
-console.log(datelist_str.length)
 
 Plotly.newPlot('graph1', data_0);
 Plotly.newPlot('graph2', data_2,layout);
@@ -750,13 +754,17 @@ var sum = 0;
 for(var i =0;i<data.length;i++)
 {
   sum = sum + parseFloat(data[i]);
+
 }
-
-
+if(!data.length)
+{
+return 1;
+}
 return (parseFloat(sum/data.length));
 }
 var sumdataset = [];
 var sumdataset2 = [];
+
 
 </script>
 

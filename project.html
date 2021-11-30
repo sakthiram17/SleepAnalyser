@@ -21,7 +21,7 @@
   <nav class ="navbar">
     <ul>
     <span class = "pagehead">Guide</span>
-    <li id = "brand"><i class = "fa fa-heartbeat"></i></li>
+
     <li class = "tog"><a href = "index.html">Home</a></li>
     <li id ="summary" class = "tog"><a href ="summary.html">Weekly</a></li>
     <li class = "active tog"><a href = "project.html">Guide</a></li>
@@ -43,6 +43,7 @@
 
 
 var mat = window.matchMedia("(max-width:929px)");
+var mat = window.matchMedia("(max-width:929px)");
 if(mat.matches)
 {
 var pagehead = document.getElementsByClassName('pagehead');
@@ -58,14 +59,16 @@ var navlist = document.getElementsByClassName('tog');
 for(var i = 0;i<navlist.length;i++)
 {
   navlist[i].style.display = "block";
-}  
+}
 var pagehead = document.getElementsByClassName('pagehead');
 pagehead[0].style.display = "inline";
+console.log("showing nav")
 document.getElementById('bar').style.display = "none"
 pagehead[0].style.display = "none";
 }
 function hidenav()
 { pagehead[0].style.display = "inline";
+pagehead[0].style.color = "white";
   var navlist = document.getElementsByClassName('tog');
 for(var i = 0;i<navlist.length;i++)
 {

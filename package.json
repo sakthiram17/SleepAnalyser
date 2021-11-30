@@ -11,6 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dimas-kmeans": "^1.0.3"
+    "density-clustering": "^1.3.0",
+    "dimas-kmeans": "^1.0.3",
+    "gulp": "^4.0.2",
+    "node-kmeans": "^1.1.9",
+    "require.js": "^1.0.0",
+    "requirejs": "^2.3.6",
+    "uniq": "^1.0.1"
   }
 }

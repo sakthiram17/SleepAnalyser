@@ -17,7 +17,7 @@
   <nav class ="navbar">
     <ul>
     <span class = "pagehead">Weekly Report</span>
-    <li id = "brand"><i class = "fa fa-heartbeat"></i></li>
+    
     <li class = "tog"><a href = "index.html">Home</a></li>
     <li id ="summary" class = "active tog"><a href ="summary.html">Weekly</a></li>
     <li class = "tog"><a href = "project.html">Guide</a></li>
@@ -25,43 +25,71 @@
     <li class = "tog far fa-window-close" id = "close"></li>
     </ul>
     </nav>
-<div class="row">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-s-12">
+        <div class = "section" id ="secion1">
+        <span class = "sectiont">Data Fetcher</span>
+      <p id ="text">
+        
+      <div id ="centerbutton">
+    
+      <button id = "button1" >Get Sleep Analysis</button>
+    </div>
+    <div id = "fill">
+      <ul>
+      <li>Total Hours of Sleep <span class ="span2" id ="sleep"></span></li>
+      <li>Total Hours of Recording <span class ="span2" id ="record"></span></li>
+      
+      <li>Total Hours of DEEP Sleep <span class ="span2" id = "dsleep"></span></li>
+      <li>Total Hours of REM Sleep <span class ="span2" id = "rsleep"></span></li>
+      <li>Total Hours of LIGHT Sleep <span class ="span2" id = "lsleep"></span></li>
+      <li>Total Hours of Awakeness <span class ="span2" id = "asleep"></span></li>
+     
+      <li>Sleep index<span id ="index" class ="span2"></span></li>
+    </ul></div>
+    </div>
+        
+      </p>
+    
+      
+    
+    </div></div>
+  <div class="col-lg-6 col-md-6 col-s-12">
+    <div class = "section">
+    <span class = "sectiont">Movements detected</span>
+  <p>
 
-    <div class = "section" id ="secion1">
-    <span class = " span1 sectiont">Weekly Report</span>
-  <p id ="text">
-  <div id ="centerbutton">
+  <div id = "graph1"></div>
+    
+  </p></div></div>
+ 
+ <div class="col-lg-6 col-md-6 col-s-12">
+    <div class = "section">
+    <span class = "sectiont">Distribution of Sleep</span>
+  <p>
+    <div id = "graph2"></div>
+  </p></div></div>
+  <div class="col-lg-6 col-md-6 col-s-12">
+    <div class = "section">
+    <span class = "sectiont">Sleep Distribution Bar Chart</span>
+  <p>
+    <div id = "bargraph"></div>
+  </p></div></div>
 
-  <button id = "button1" type = "button">Get Sleep Analysis</button>
-  
 </div>
-<div id = "fill">
-    <ul>
-    <li>Total Hours of Sleep <span class ="span2" id ="sleep"></span></li>
-    <li>Total Hours of Recording <span class ="span2" id ="record"></span></li>
-    <li>Total Hours of DEEP Sleep <span class ="span2" id = "dsleep"></span></li>
-    <li>Total Hours of REM Sleep <span class ="span2" id = "rsleep"></span></li>
-    <li>Total Hours of LIGHT Sleep <span class ="span2" id = "lsleep"></span></li>
-    <li>Total Hours of Awakeness <span class ="span2" id = "asleep"></span></li>
-    <li>Avg Hours of Sleep per day <span class ="span2" id ="avgsleep"></span></li>
-    <li>Sleep index<span class ="span2" id ="sleepindex"></span></li>
-
-</ul>
-  </div>
-  </p>
-
  
 </div>
 
  
  
 <div class="loader"></div>
- 
+
 <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> 
 <script type = "module">
 var datelist = [];
 var start_time;
 var colour = "black";
+
 
 
 // Import the functions you need from the SDKs you need
@@ -85,128 +113,94 @@ var colour = "black";
   measurementId: "G-DE1W2KHVN3"
 };
 
-var mat = window.matchMedia("(max-width:929px)");
+var size =500;
+var mat = window.matchMedia("(max-width:500px)");
 if(mat.matches)
 {
-var pagehead = document.getElementsByClassName('pagehead');
-pagehead[0].style.display = "inline";
+size = 320;
 }
-var barbtn = document.getElementById('barbtn');
-barbtn.onclick = shownav;
-var barbtn1 = document.getElementById('close');
-barbtn1.onclick = hidenav;
-function shownav()
+function setTime()
 {
-var navlist = document.getElementsByClassName('tog');
-for(var i = 0;i<navlist.length;i++)
-{
-  navlist[i].style.display = "block";
-}  
-var pagehead = document.getElementsByClassName('pagehead');
-
-console.log("showing nav")
-document.getElementById('bar').style.display = "none"
-pagehead[0].style.display = "none";
-}
-function hidenav()
-{ pagehead[0].style.display = "inline";
-  var navlist = document.getElementsByClassName('tog');
-for(var i = 0;i<navlist.length;i++)
-{
-  navlist[i].style.display = "none";
-}  document.getElementById('bar').style.display = "inline";
-console.log("hidenav")
-}
-document.addEventListener('click', function(event)
-{  var navlist = document.getElementsByClassName('tog');
-if(!(event.target.closest('.navbar')))
-{
-if(navlist[0].style.display!="none")
-{
-  hidenav();
-}
-}
-});
-var awake = 0;
+var d = new Date();
+var Hour = d.getHours();
+var minute = d.getMinutes();
+var second = d.getSeconds();
+document.getElementById("clock").textContent =String(Hour)+':'+String(minute)+':'+String(second);}
+var x = [];
 var time = [];
-var datelist = [];
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getDatabase();
-var arraylist = ["Mon","Tue","Wed","Th","Fri","Sat","Sun"];
-
-
-const dbref = ref(db);
-
-var sumbtn = document.getElementById('button1');
-sumbtn.onclick = getData;
-var sumdataset =[];
-var sumdataset2 = "";
-var time3 = [];
-var sumdataset3 = [];
-function getData()
-{  
-  sumdataset2 = "";
-  time3 = "";
-  sumdataset3 = [];
-  
- for (var i = 0;i<7;i++)
- {
-  var url =`data${i}`;
-  const dbref = ref(db);
-  displayload();
- if(i==6)
- {
-  get(child(dbref,url)).then(snapshot=>{
-  var movements = snapshot.val();
-  sumdataset2 = sumdataset2 + movements;
-  dispdata();
-
-  hideload();
-
-  
- });
- }
- else{
-  get(child(dbref,url)).then(snapshot=>{
-  var movements = snapshot.val();
- 
-
-  sumdataset2 = sumdataset2 + movements;
- });
-
-
- }
- }
-function dispdata(){
-  console.log(sumdataset2)
- var space = document.getElementById('fill');
- var total_hours = sumdataset2.length/3600;
-var sumdataset3 = sumdataset2.split("");
-var total_sleep = 0;
-for(var i = 0;i<sumdataset2.length;i++)
-{
-total_sleep = total_sleep +1;
+for (var i = 0; i < 500; i ++) {
+  x[i] = Math.random();
 }
-total_sleep = total_sleep/3600;
-var total_awake = total_hours - total_sleep;
-var avgsleepperday = total_sleep/7;
-let vectors1 = new Array();
-var time3 = [];
-for(var i =0;i<sumdataset3.length;i++)
-{
-  time3.push(i);
-}
-for (let i = 0 ; i < sumdataset3.length ; i++) {
+var trace = {
+    x: x,
+    type: 'histogram',
+  };
+var data = [trace];
+var data2 = [{
+  values: [19, 26, 55],
+  labels: ['REM Sleep', 'Deep Sleep', 'Light Sleep','Awake'],
+  type: 'pie'
+}];
 
-  if(sumdataset3[i]==1)
-  {
-   vectors1.push([10, time3[i]])
+  var layout = {
+  autosize: true,
+  width: size,
+  height: size,
+  margin: {
+    l: 5,
+    r: 5,
+    b: 10,
+    t: 10,
+    pad: 4
+  },
+  plot_bgcolor:"white",
+  paper_bgcolor:"white",
+  font: {
+    color: "black"
   }
-}
-console.log(vectors1)
-var res = kmeans(vectors1,4);
-var array = [res.clusters[0].points,res.clusters[1].points,res.clusters[2].points,res.clusters[3].points]
+  
+};
+
+
+var layout1 = {
+  autosize:true,
+  plot_bgcolor:"white",
+  paper_bgcolor:"white",
+      textfont: {
+    color: colour
+  },
+  font:{
+    color:"black"
+  }
+ 
+  
+};
+
+
+
+
+
+
+var data4 = [
+  {
+    x: ['REM SLeep (in hours)', 'Deep Sleep (in hours)', 'Light Sleep(in hours)','Awake (in hours)'],
+    y: [3, 4, 1,2],
+    type: 'bar',
+     marker: {
+    line: {
+      width: 2
+    }
+  }
+    
+  }
+];
+
+var time_iter = 0;
+var time = [];
+Plotly.newPlot('graph2', data2,layout);
+Plotly.newPlot('graph1', data,layout);
+Plotly.newPlot('bargraph',data4,layout1);
+
 function bblSort(arr){
      
      for(var i = 0; i < arr.length; i++){
@@ -228,17 +222,219 @@ function bblSort(arr){
      // Print the sorted array
   return arr;
     }
-var array = bblSort(array);
 
-var awake = array[3]/3600;
-  var rem = array[2]/3600;
-  var light= array[1]/3600;
- var n_deep_sleep = (sumdataset3.length - vectors1.length)/3600;
+var mat = window.matchMedia("(max-width:929px)");
+if(mat.matches)
+{
+var pagehead = document.getElementsByClassName('pagehead');
+pagehead[0].style.display = "inline";
+}
+var barbtn = document.getElementById('barbtn');
+barbtn.onclick = shownav;
+var barbtn1 = document.getElementById('close');
+barbtn1.onclick = hidenav;
+function shownav()
+{
+var navlist = document.getElementsByClassName('tog');
+for(var i = 0;i<navlist.length;i++)
+{
+  navlist[i].style.display = "block";
+}
+var pagehead = document.getElementsByClassName('pagehead');
+pagehead[0].style.display = "inline";
 
-var n_rem = rem.length/3600;
+document.getElementById('bar').style.display = "none"
+pagehead[0].style.display = "none";
+}
+function hidenav()
+{ pagehead[0].style.display = "inline";
+pagehead[0].style.color = "white";
+  var navlist = document.getElementsByClassName('tog');
+for(var i = 0;i<navlist.length;i++)
+{
+  navlist[i].style.display = "none";
+}  document.getElementById('bar').style.display = "inline";
+}
+document.addEventListener('click', function(event)
+{  var navlist = document.getElementsByClassName('tog');
+if(!(event.target.closest('.navbar')))
+{
+if(navlist[0].style.display!="none")
+{
+  hidenav();
+}
+}
+});
 
-var n_light = light.length/3600;
-var avgsleep = total_sleep/7;
+var awake = 0;
+var time = [];
+var datelist = [];
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getDatabase();
+var arraylist = ["Mon","Tue","Wed","Th","Fri","Sat","Sun"];
+
+
+const dbref = ref(db);
+var array = [];
+var sumbtn = document.getElementById('button1');
+sumbtn.onclick = getData;
+var sumdataset =[];
+var sumdataset2 = "";
+var time3 = [];
+var sumdataset3 = [];
+var res = [];
+var total = 0;
+var rem = 0;
+var awake = 0;
+var n_deep = 0;
+var light = 0;
+var deep =0;
+var n_rem = 0;
+var n_awake = 0;
+var n_deep = 0;
+var n_light = 0;
+function getData()
+{  
+  sumdataset2 = "";
+  time3 = "";
+  sumdataset3 = [];
+  
+ for (var i = 0;i<7;i++)
+ {
+  var url =`data${i}`;
+  const dbref = ref(db);
+
+  displayload();
+ if(i==6)
+ {
+  get(child(dbref,url)).then(snapshot=>{
+  var movements = snapshot.val();
+  sumdataset2 = sumdataset2 + movements;
+  hideload();
+  let vectors1 = new Array();
+var time3 = [];
+for(var i =0;i<movements.length;i++)
+{
+  time3.push(i);
+}
+for (let i = 0 ; i < movements.length ; i++) {
+
+  if(movements[i]==1)
+  {
+   vectors1.push([10, time3[i]])
+  }else{
+    vectors1.push([-10, time3[i]])
+  }
+}
+array = [];
+
+ var res = kmeans(vectors1,4);
+
+
+ array = [res.clusters[0].points,res.clusters[1].points,res.clusters[2].points, res.clusters[3].points]
+ array = bblSort(array);
+ console.log(array)
+ 
+ vectors1 = [];
+  
+ awake = array[3];
+ rem = array[2];
+ light =array[1];
+ 
+ awake = awake.length||0;
+ rem = rem.length||0;
+ light = light.length||0;
+ deep = total - awake;
+
+ n_rem = n_rem + rem;
+ n_deep =n_deep + deep;
+ n_light = n_light + light;
+ n_awake = awake + n_awake;
+ var x = n_rem;
+ var y = n_light;
+ var z = n_awake;
+ var q = n_deep;
+ console.log(x,y,z,q)
+ dispdata(x,y,z,q);
+hideload();
+ });
+ }
+ else{
+  get(child(dbref,url)).then(snapshot=>{
+  var movements = snapshot.val();
+  sumdataset2 = sumdataset2 + movements;
+  total = movements.length;
+  let vectors1 = new Array();
+var time3 = [];
+for(var i =0;i<movements.length;i++)
+{
+  time3.push(i);
+}
+for (let i = 0 ; i < movements.length ; i++) {
+
+  if(movements[i]==1)
+  {
+   vectors1.push([10, time3[i]])
+  }
+  else{
+    vectors1.push([-10, time3[i]])
+  }
+}
+array = [];
+ res = kmeans(vectors1,4);
+ vectors1 = [];
+ array = [res.clusters[0].points,res.clusters[1].points,res.clusters[2].points, res.clusters[3].points]
+  array = bblSort(array);
+  awake = array[3];
+ rem = array[2];
+ light =array[1];
+
+ 
+ awake = awake.length||0;
+ rem = rem.length||0;
+ light = light.length||0;
+ deep = total - awake;
+
+ n_rem = n_rem + rem;
+ n_deep =n_deep + deep;
+ n_light = n_light + light;
+
+ n_awake = awake + n_awake;
+ });
+
+ }
+
+ }
+function dispdata(n_rem,n_light,n_awake,n_deep){
+
+ console.log(n_rem)
+  var total = sumdataset2.length;
+
+  var avgsleep = total/(3600*7);
+ var space = document.getElementById('fill');
+ var total_hours = sumdataset2.length/3600;
+var sumdataset3 = sumdataset2.split("");
+var total_sleep = 0;
+total_sleep = (total- n_awake)/3600;
+var total_awake = n_awake/3600;
+var avgsleepperday = total_sleep/7;
+
+
+var time3 = [];
+for(var i = 0;i<sumdataset2.length;i++)
+{time3.push(i);
+}
+  var n_awake = n_awake/3600;
+  var n_rem = n_rem/3600;
+  var n_light= n_light/3600;
+ 
+
+ var n_deep_sleep = n_deep/3600;
+ var rem_percent = (n_rem/total)*100;
+var deep_percent = (n_deep_sleep/total)*100;
+var light_percent = (n_light/total)*100;
+var none_percent = (n_awake/total)*100;
 var ml = 0;
 for(var i = 0;i<sumdataset3.length;i++)
 {
@@ -247,20 +443,78 @@ for(var i = 0;i<sumdataset3.length;i++)
     }
 
 }
+var data_0 = [
+  {
+    x: time3,
+    y: sumdataset3,
+    type: 'bar'
+  }
+];
+var data_2 = [{
+  values: [rem_percent, deep_percent, light_percent,none_percent],
+  labels: ['REM Sleep', 'Deep Sleep', 'Light Sleep','Awake'],
+  type: 'pie'
+}];
+var data4 = [
+  {
+    x: ['REM SLeep (in hours)', 'Deep Sleep (in hours)', 'Light Sleep(in hours)','Awake (in hours)'],
+    y: [rem_percent,deep_percent, light_percent,none_percent],
+    type: 'bar'
+  }
+];
+var layout = {
+  autosize: true,
+  width: size,
+  height: size,
+  margin: {
+    l: 5,
+    r: 5,
+    b: 10,
+    t: 10,
+    pad: 4
+  },
+  plot_bgcolor:"white",
+  paper_bgcolor:"white",
+  font: {
+    color: "black"
+  }
+  
+};
+var layout2 = {
+  autosize:true,
+  plot_bgcolor:"white",
+  paper_bgcolor:"white",
+      textfont: {
+    color: colour
+  },
+  font:{
+    color:"black"
+  }
+}
+Plotly.newPlot('graph1', data_0);
+Plotly.newPlot('graph2', data_2,layout);
+Plotly.newPlot('bargraph', data4,layout2);
+
+
+
+
+
+
+
 
 document.getElementById('sleep').innerHTML = total_sleep.toFixed(2);
 document.getElementById('record').innerHTML = total_hours.toFixed(2);
 document.getElementById('lsleep').innerHTML = n_light.toFixed(2);
 document.getElementById('rsleep').innerHTML = n_rem.toFixed(2);
 document.getElementById('dsleep').innerHTML = n_deep_sleep.toFixed(2);
-document.getElementById('asleep').innerHTML = (total_hours-n_rem-n_light-n_deep_sleep).toFixed(2);
+document.getElementById('asleep').innerHTML = (n_awake).toFixed(2);
 document.getElementById('avgsleep').innerHTML = avgsleep.toFixed(2);
 document.getElementById('sleepindex').innerHTML = ((sumdataset3.length)/(ml+sumdataset3.length)).toFixed(2);
 sumdataset =[];
    sumdataset2 = "";
    time3 = [];
 sumdataset3 = [];
-vectors1= [];
+n_rem,n_awake,n_light,n_deep = 0;
 }}
 
 
@@ -310,20 +564,9 @@ function getRandomCentroidsNaiveSharding(dataset, k) {
 
 function getRandomCentroids(dataset, k) {
   // selects random points as centroids from the dataset
-  const numSamples = dataset.length;
-  const centroidsIndex = [];
-  let index;
-  while (centroidsIndex.length < k) {
-    index = randomBetween(0, numSamples);
-    if (centroidsIndex.indexOf(index) === -1) {
-      centroidsIndex.push(index);
-    }
-  }
-  const centroids = [];
-  for (let i = 0; i < centroidsIndex.length; i++) {
-    const centroid = [...dataset[centroidsIndex[i]]];
-    centroids.push(centroid);
-  }
+
+  const centroids = ['0','0','0','0'];
+  
   return centroids;
 }
 
@@ -497,11 +740,12 @@ function hideload()
 {
   var loader  = document.getElementsByClassName('loader');
  loader = loader[0];
- console.log("closing stuff")
+
  loader.style.removeProperty('display');
 loader.style.display = "none";
 loader.style.visibility= "hidden";
 }
+
 
 </script>
 
