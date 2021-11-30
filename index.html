@@ -393,13 +393,7 @@ for (let i = 0 ; i < data_set.length ; i++) {
   vectors.push([-100000,time[i]])
  }
 }
-var dbscanner = jDBSCAN()
-	.eps(0.75)
-	.minPts(1)
-	.distance('EUCLIDEAN')
-	.data(vectors);
-var res2 = dbscanner();
-console.log(res2);
+
 var res = kmeans(vectors,4,true);
 
 var sleepindex = [];
